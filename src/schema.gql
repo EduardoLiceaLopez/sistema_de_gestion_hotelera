@@ -1,0 +1,86 @@
+# ------------------------------------------------------
+# THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
+# ------------------------------------------------------
+
+type Cliente {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateClienteInput {
+  """Example field (placeholder)"""
+  exampleField: Int!
+}
+
+input CreateTipoUsuarioInput {
+  nombre: String!
+}
+
+input CreateUsuarioInput {
+  apMaterno: String
+  apPaterno: String!
+  fech_nacimiento: String!
+  nombre: String!
+  numTelefono: String!
+  tipo_usuario_id: Int!
+}
+
+type Mutation {
+  actualizarTipoUsuario(updateTipoUsuarioInput: UpdateTipoUsuarioInput!): TipoUsuario!
+  actualizarUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
+  borrarTipoUsuario(id: Float!): String!
+  borrarUsuario(id: Float!): String!
+  crearTipoUsuario(tipoUsuarioInput: CreateTipoUsuarioInput!): TipoUsuario!
+  crearUsuario(usuarioInput: CreateUsuarioInput!): Usuario!
+  createCliente(createClienteInput: CreateClienteInput!): Cliente!
+  removeCliente(id: Int!): Cliente!
+  updateCliente(updateClienteInput: UpdateClienteInput!): Cliente!
+}
+
+type Query {
+  cliente(id: Int!): Cliente!
+  clientes: [Cliente!]!
+  tipoUsuario(id: Float!): TipoUsuario!
+  tipoUsuarios: [TipoUsuario!]!
+  usuario(id: Float!): Usuario!
+  usuarios: [Usuario!]!
+}
+
+type TipoUsuario {
+  id: Int!
+  nombre: String!
+  usuarios: [Usuario!]
+}
+
+input UpdateClienteInput {
+  """Example field (placeholder)"""
+  exampleField: Int
+  id: Int!
+}
+
+input UpdateTipoUsuarioInput {
+  id: Int!
+  nombre: String
+}
+
+input UpdateUsuarioInput {
+  apMaterno: String
+  apPaterno: String
+  fech_nacimiento: String
+  id: Int!
+  nombre: String
+  numTelefono: String
+  tipo_usuario_id: Int
+}
+
+type Usuario {
+  apMaterno: String
+  apPaterno: String!
+  fech_nacimiento: String!
+  id: Float!
+  nombre: String!
+  numTelefono: String!
+  tipoUsuario: TipoUsuario!
+  tipo_usuario: TipoUsuario @deprecated(reason: "Este campo ha cambiado su valor")
+  tipo_usuario_id: Float!
+}
