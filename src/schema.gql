@@ -3,13 +3,16 @@
 # ------------------------------------------------------
 
 type Cliente {
+  tipoUsuario: Usuario!
+  usuario: Usuario!
+
   """Example field (placeholder)"""
-  exampleField: Int!
+  usuario_id: Int!
 }
 
 input CreateClienteInput {
   """Example field (placeholder)"""
-  exampleField: Int!
+  usuario_id: Int!
 }
 
 input CreateTipoUsuarioInput {
@@ -33,8 +36,6 @@ type Mutation {
   crearTipoUsuario(tipoUsuarioInput: CreateTipoUsuarioInput!): TipoUsuario!
   crearUsuario(usuarioInput: CreateUsuarioInput!): Usuario!
   createCliente(createClienteInput: CreateClienteInput!): Cliente!
-  removeCliente(id: Int!): Cliente!
-  updateCliente(updateClienteInput: UpdateClienteInput!): Cliente!
 }
 
 type Query {
@@ -50,12 +51,6 @@ type TipoUsuario {
   id: Int!
   nombre: String!
   usuarios: [Usuario!]
-}
-
-input UpdateClienteInput {
-  """Example field (placeholder)"""
-  exampleField: Int
-  id: Int!
 }
 
 input UpdateTipoUsuarioInput {
@@ -76,6 +71,7 @@ input UpdateUsuarioInput {
 type Usuario {
   apMaterno: String
   apPaterno: String!
+  cliente: Cliente!
   fech_nacimiento: String!
   id: Float!
   nombre: String!

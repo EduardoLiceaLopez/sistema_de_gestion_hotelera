@@ -11,6 +11,7 @@ import { ClientesModule } from './clientes/clientes.module';
 
 
 
+
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
@@ -29,7 +30,8 @@ import { ClientesModule } from './clientes/clientes.module';
   }),
   UsuariosModule,
   TipoUsuariosModule,
-  ClientesModule],
+  ClientesModule,
+],
   controllers: [AppController],
   providers: [AppService],
 })

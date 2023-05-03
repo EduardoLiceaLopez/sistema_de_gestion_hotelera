@@ -1,6 +1,7 @@
 CREATE TABLE tipo_usuarios(
 	id INT PRIMARY KEY auto_increment,
 	nombre VARCHAR(50) NOT NULL
+
 );
 
 CREATE TABLE usuarios(
@@ -16,7 +17,6 @@ CREATE TABLE usuarios(
 );
 
 CREATE TABLE cliente(
-    tipo_usuario_id INT PRIMARY KEY,
-    FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id)
-
+	usuario_id INT PRIMARY KEY,
+    FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
