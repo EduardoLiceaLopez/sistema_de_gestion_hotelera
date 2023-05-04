@@ -3,7 +3,7 @@ import { UsuariosService } from './usuarios.service';
 import { Usuario } from './entities/usuario.entity';
 import { CreateUsuarioInput } from './dto/create-usuario.input';
 import { UpdateUsuarioInput } from './dto/update-usuario.input';
-import { TipoUsuario } from 'src/tipo_usuarios/entities/tipo_usuario.entity';
+import { TipoUsuario } from '../tipo_usuarios/entities/tipo_usuario.entity';
 
 @Resolver(() => Usuario)
 export class UsuariosResolver {
@@ -68,7 +68,7 @@ export class UsuariosResolver {
 
   //DELETE en CRUD
   @Mutation((returns)=> String, {name: 'borrarUsuario'})
-  remove(@Args('id') id: number): Promise<any>{
+  remove(@Args('id') id: number): Promise<Boolean>{
     return this.usuariosServicio.remove(id);
   }
 

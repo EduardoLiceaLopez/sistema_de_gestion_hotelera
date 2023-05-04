@@ -2,17 +2,16 @@
 # THIS FILE WAS AUTOMATICALLY GENERATED (DO NOT MODIFY)
 # ------------------------------------------------------
 
-type Cliente {
-  tipoUsuario: Usuario!
-  usuario: Usuario!
-
-  """Example field (placeholder)"""
-  usuario_id: Int!
+input CreateHabitacionInput {
+  estado: String!
+  numero_habitacion: String!
+  precio: String!
+  tipo_habitacion_id: Int!
+  ubicacion: String!
 }
 
-input CreateClienteInput {
-  """Example field (placeholder)"""
-  usuario_id: Int!
+input CreateTipoHabitacionInput {
+  tipo: String!
 }
 
 input CreateTipoUsuarioInput {
@@ -28,6 +27,19 @@ input CreateUsuarioInput {
   tipo_usuario_id: Int!
 }
 
+type Habitacion {
+  estado: String!
+
+  """Example field (placeholder)"""
+  id: Int!
+  numero_habitacion: String!
+  precio: String!
+  tipo_habitacion: TipoHabitacion!
+  tipo_habitacion_id: Int!
+  tipohabitacion: TipoHabitacion!
+  ubicacion: String!
+}
+
 type Mutation {
   actualizarTipoUsuario(updateTipoUsuarioInput: UpdateTipoUsuarioInput!): TipoUsuario!
   actualizarUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
@@ -35,22 +47,50 @@ type Mutation {
   borrarUsuario(id: Float!): String!
   crearTipoUsuario(tipoUsuarioInput: CreateTipoUsuarioInput!): TipoUsuario!
   crearUsuario(usuarioInput: CreateUsuarioInput!): Usuario!
-  createCliente(createClienteInput: CreateClienteInput!): Cliente!
+  createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
+  createTipoHabitacion(createTipoHabitacionInput: CreateTipoHabitacionInput!): TipoHabitacion!
+  removeHabitacion(id: Int!): Habitacion!
+  removeTipoHabitacion(id: Int!): TipoHabitacion!
+  updateHabitacion(updateHabitacionInput: UpdateHabitacionInput!): Habitacion!
+  updateTipoHabitacion(updateTipoHabitacionInput: UpdateTipoHabitacionInput!): TipoHabitacion!
 }
 
 type Query {
-  cliente(id: Int!): Cliente!
-  clientes: [Cliente!]!
+  habitacion(id: Int!): Habitacion!
+  tipoHabitacion(id: Int!): TipoHabitacion!
+  tipoHabitaciones: [TipoHabitacion!]!
   tipoUsuario(id: Float!): TipoUsuario!
   tipoUsuarios: [TipoUsuario!]!
   usuario(id: Float!): Usuario!
   usuarios: [Usuario!]!
 }
 
+type TipoHabitacion {
+  habitaciones: [Habitacion!]
+
+  """Example field (placeholder)"""
+  id: Int!
+  tipo: String!
+}
+
 type TipoUsuario {
   id: Int!
   nombre: String!
   usuarios: [Usuario!]
+}
+
+input UpdateHabitacionInput {
+  estado: String
+  id: Int!
+  numero_habitacion: String
+  precio: String
+  tipo_habitacion_id: Int
+  ubicacion: String
+}
+
+input UpdateTipoHabitacionInput {
+  id: Int!
+  tipo: String
 }
 
 input UpdateTipoUsuarioInput {
@@ -71,7 +111,6 @@ input UpdateUsuarioInput {
 type Usuario {
   apMaterno: String
   apPaterno: String!
-  cliente: Cliente!
   fech_nacimiento: String!
   id: Float!
   nombre: String!

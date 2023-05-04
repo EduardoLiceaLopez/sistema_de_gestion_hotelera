@@ -4,8 +4,8 @@ import { UpdateUsuarioInput } from './dto/update-usuario.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Usuario } from './entities/usuario.entity';
 import { Repository } from 'typeorm';
-import { TipoUsuario } from 'src/tipo_usuarios/entities/tipo_usuario.entity';
-import { TipoUsuariosService } from 'src/tipo_usuarios/tipo_usuarios.service';
+import { TipoUsuario } from '../tipo_usuarios/entities/tipo_usuario.entity';
+import { TipoUsuariosService } from '../tipo_usuarios/tipo_usuarios.service';
 
 @Injectable()
 export class UsuariosService {
@@ -54,7 +54,7 @@ export class UsuariosService {
 
 
   //UPDATE
-  async update(id: number, updateUsuarioInput: UpdateUsuarioInput) {
+  async update(id: number, updateUsuarioInput: UpdateUsuarioInput): Promise<Usuario> {
     const usuario = await this.usuarioRepositorio.findOne({
       where:{
         id,
@@ -69,7 +69,7 @@ export class UsuariosService {
   }
 
   //DELETE
-  async remove(id: number): Promise<any> {
+  async remove(id: number): Promise<Boolean> {
     const usuario = await this.usuarioRepositorio.findOne({
       where: {id}
     })
@@ -78,7 +78,7 @@ export class UsuariosService {
       const resultado = await this.usuarioRepositorio.delete(id);
       
       if (resultado.affected !==0){
-        return `Se ha removido al usuario con ID #${id}`;
+        return true;
       }
     } else {
       throw new NotFoundException(`Usuario con el ID ${id} no fue econtrado o no existe`);

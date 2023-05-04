@@ -1,9 +1,8 @@
 import { Module } from '@nestjs/common';
-
 import { TipoUsuariosResolver } from './tipo_usuarios.resolver';
 import { TypeOrmModule } from '@nestjs/typeorm';
 import { TipoUsuario } from './entities/tipo_usuario.entity';
-import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { Usuario } from '../usuarios/entities/usuario.entity';
 import { TipoUsuariosService } from './tipo_usuarios.service';
 
 

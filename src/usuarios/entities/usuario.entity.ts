@@ -1,6 +1,5 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Cliente } from 'src/clientes/entities/cliente.entity';
-import { TipoUsuario } from 'src/tipo_usuarios/entities/tipo_usuario.entity';
+import { TipoUsuario } from '../../tipo_usuarios/entities/tipo_usuario.entity';
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 
@@ -46,14 +45,5 @@ export class Usuario {
    @Field({nullable:true, deprecationReason: 'Este campo ha cambiado su valor' })
    tipo_usuario?: TipoUsuario;
    
-
-   @OneToOne(() => Cliente, (cliente) => cliente.usuario) // specify inverse side as a second parameter
-   @JoinColumn()
-   @Field()
-   cliente: Cliente;
-
-   
-
-
 
 }

@@ -37,7 +37,7 @@ export class TipoUsuariosResolver {
  
    //DELETE en CRUD
    @Mutation((returns)=> String, {name: 'borrarTipoUsuario'})
-   remove(@Args('id') id: number): Promise<any>{
+   remove(@Args('id') id: number): Promise<Boolean>{
      return this.tipoUsuariosServicio.remove(id);
    }
 }

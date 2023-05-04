@@ -20,3 +20,20 @@ CREATE TABLE cliente(
 	usuario_id INT PRIMARY KEY,
     FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
+
+CREATE TABLE tipo_habitacion(
+	id Int AUTO_INCREMENT NOT NULL,
+	tipo Varchar(50) NOT NULL,
+	PRIMARY KEY (id)
+);
+
+CREATE TABLE habitacion(
+	id Int AUTO_INCREMENT NOT NULL,
+	estado Varchar(50) NULL,
+    numero_habitacion Char(3) NOT NULL,
+	precio Varchar(50) NOT NULL,
+    ubicacion Varchar(50) NOT NULL,
+    tipo_habitacion_id Int NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (tipo_habitacion_id) REFERENCES tipo_habitacion(id)
+);

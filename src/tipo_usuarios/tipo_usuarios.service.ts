@@ -29,7 +29,7 @@ export class TipoUsuariosService {
   }
 
 
-  async update(id: number, updateTipoUsuarioInput: UpdateTipoUsuarioInput) {
+  async update(id: number, updateTipoUsuarioInput: UpdateTipoUsuarioInput): Promise<TipoUsuario> {
 
     const tipoUsuario = this.tipoUsuarioRepositorio.findOne({
       where:{id,}
@@ -37,13 +37,17 @@ export class TipoUsuariosService {
 
     if(tipoUsuario){
       await this.tipoUsuarioRepositorio.update(id, updateTipoUsuarioInput);
-      return this.tipoUsuarioRepositorio.findBy({id:id});
+      return this.tipoUsuarioRepositorio.findOneBy({id:id});
+
     } else {
       throw new NotFoundException(`Tipo de usuario con el id ${id} no fue encontrado o existe`);
     }
   }
 
-  async remove(id: number): Promise<any> {
+
+
+
+  async remove(id: number): Promise<Boolean> {
     const tipoUsuario = await this.tipoUsuarioRepositorio.findOne({
       where: {id}
     })
@@ -52,7 +56,7 @@ export class TipoUsuariosService {
       const resultado = await this.tipoUsuarioRepositorio.delete(id);
       
       if (resultado.affected !==0){
-        return `Se ha removido al usuario con ID #${id}`;
+        return true;
       }
     } else {
       throw new NotFoundException(`Tipo de usuario con el ID ${id} no fue econtrado o no existe`);
