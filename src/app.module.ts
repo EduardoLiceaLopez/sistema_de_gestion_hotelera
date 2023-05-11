@@ -9,6 +9,7 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { TipoUsuariosModule } from './tipo_usuarios/tipo_usuarios.module';
 import { TipoHabitacionModule } from './tipo_habitacion/tipo_habitacion.module';
 import { HabitacionModule } from './habitacion/habitacion.module';
+import { ReservacionModule } from './reservacion/reservacion.module';
 
 
 
@@ -34,6 +35,7 @@ import { HabitacionModule } from './habitacion/habitacion.module';
   TipoUsuariosModule,
   TipoHabitacionModule,
   HabitacionModule,
+  ReservacionModule,
 ],
   controllers: [AppController],
   providers: [AppService],

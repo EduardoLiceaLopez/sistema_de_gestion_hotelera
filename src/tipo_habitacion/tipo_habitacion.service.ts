@@ -37,6 +37,7 @@ export class TipoHabitacionService {
       await this.tipoHabitacionRepository.update(id, updateTipoHabitacionInput);
 
       return this.tipoHabitacionRepository.findOneBy({id:id});
+      
     }else{
       throw new NotFoundException('No encontrado');
     }

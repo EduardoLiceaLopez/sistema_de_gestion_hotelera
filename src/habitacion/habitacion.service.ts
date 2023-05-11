@@ -33,16 +33,16 @@ export class HabitacionService {
   }
 
   //Muestra solo uno (según el id dado) de los usuarios
-  async findOne(id: number): Promise<Habitacion> {
+  async findOne(num_habitacion: number): Promise<Habitacion> {
     const usuario = await this.habitacionRepositorio.findOne({
       where:{
-        id,
+        num_habitacion,
       }
     })
     if(usuario){
       return usuario;
     } else{
-      throw new NotFoundException(`Habitación con el ID ${id} no fue econtrado o no existe`);
+      throw new NotFoundException(`La habitación  ${num_habitacion} no fue econtrada o no existe`);
     }
   }
 
@@ -56,31 +56,31 @@ export class HabitacionService {
 
 
   //UPDATE
-  async update(id: number, updateHabitacionInput: UpdateHabitacionInput): Promise<Habitacion> {
-    const habitacion = await this.habitacionRepositorio.findOneBy({id: id})
+  async update(num_habitacion: number, updateHabitacionInput: UpdateHabitacionInput): Promise<Habitacion> {
+    const habitacion = await this.habitacionRepositorio.findOneBy({num_habitacion: num_habitacion})
 
     if(habitacion){
-      await this.habitacionRepositorio.update(id, updateHabitacionInput);
-      return this.habitacionRepositorio.findOneBy({id: id})
+      await this.habitacionRepositorio.update(num_habitacion, updateHabitacionInput);
+      return this.habitacionRepositorio.findOneBy({num_habitacion: num_habitacion})
     } else {
-      throw new NotFoundException (`Habitacion con el ID ${id} no fue econtrado o no existe`);
+      throw new NotFoundException (`La habitacion ${num_habitacion} no fue econtrada o no existe`);
     }
   }
 
   //DELETE
-  async remove(id: number): Promise<Boolean> {
+  async remove(num_habitacion: number): Promise<Boolean> {
     const habitacion = await this.habitacionRepositorio.findOne({
-      where: {id}
+      where: {num_habitacion}
     })
 
     if (habitacion){
-      const resultado = await this.habitacionRepositorio.delete(id);
+      const resultado = await this.habitacionRepositorio.delete(num_habitacion);
       
       if (resultado.affected !==0){
         return true;
       }
     } else {
-      throw new NotFoundException(`Habitacion con el ID ${id} no fue econtrado o no existe`);
+      throw new NotFoundException(`Habitacion con el ID ${num_habitacion} no fue econtrado o no existe`);
     }
 
   }

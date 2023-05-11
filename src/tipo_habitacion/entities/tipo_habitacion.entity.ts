@@ -1,6 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Habitacion } from '../../habitacion/entities/habitacion.entity';
-import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('tipo_habitacion')
 @ObjectType()
@@ -14,8 +14,8 @@ export class TipoHabitacion {
   @Field(()=>String)
   tipo: string;
 
-  @OneToMany(()=> Habitacion, (habitacion) => habitacion.numero_habitacion)
-  @Field(()=> [Habitacion], {nullable: true})
-  habitaciones: Habitacion[];
+  @OneToOne(() => Habitacion, (habitacion) => habitacion.tipo_habitacion, {cascade: true, nullable: true})
+  @JoinColumn()
+  habitacion?: Habitacion;
 
 }
