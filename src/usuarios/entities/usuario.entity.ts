@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { TipoUsuario } from '../../tipo_usuarios/entities/tipo_usuario.entity';
-import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
+import { UserAccess } from 'src/user_access/entities/user_access.entity';
 
 
 
@@ -44,6 +45,10 @@ export class Usuario {
    @JoinColumn({name: 'tipo_usuario_id'})
    @Field({nullable:true, deprecationReason: 'Este campo ha cambiado su valor' })
    tipo_usuario?: TipoUsuario;
+
+   @OneToMany(()=> UserAccess, (userAccess) => userAccess.usuario) 
+   @Field(()=> [UserAccess], {nullable: true})
+   user_access: UserAccess[];
    
 
 }

@@ -37,3 +37,12 @@ CREATE TABLE habitacion(
 	PRIMARY KEY (id),
 	FOREIGN KEY (tipo_habitacion_id) REFERENCES tipo_habitacion(id)
 );
+
+CREATE TABLE user_access(
+	id Int AUTO_INCREMENT NOT NULL,
+	correo Varchar(100) NOT NULL,
+    contrasenia Varchar(50) NOT NULL,
+    usuarios_id Int NOT NULL,
+	PRIMARY KEY (id),
+	FOREIGN KEY (usuarios_id) REFERENCES usuarios(id)
+    ); 
