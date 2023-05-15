@@ -14,7 +14,7 @@ export class Habitacion{
   @Field(()=> Int)
   tipo_habitacion_id: number;
 
- @OneToOne(()=> TipoHabitacion, {cascade: true})
+ @OneToOne(()=> TipoHabitacion)
   @JoinColumn({name:'tipo_habitacion_id'})
   @Field(()=>TipoHabitacion, {nullable: true})
   tipo_habitacion?: TipoHabitacion;

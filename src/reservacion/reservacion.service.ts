@@ -1,12 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
+import { ResponseReservacionOutput } from './dto/response-reservacion-output';
 import { Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
-import { ResponseReservacionOutput } from './dto/response-reservacion.output';
-import { response } from 'express';
-
 
 @Injectable()
 export class ReservacionService {
@@ -14,8 +12,10 @@ export class ReservacionService {
   constructor(
 
     @InjectRepository(Reservacion)
-    private reservacionesRepository: Repository<Reservacion>
-  ){}
+    private reservacionRepositorio: Repository<Reservacion>,
+  ){
+
+  }
 
 
   create(createReservacionInput: CreateReservacionInput) {
@@ -38,26 +38,39 @@ export class ReservacionService {
     return `This action removes a #${id} reservacion`;
   }
 
-  reservacionCliente(createReservacionInput: CreateReservacionInput, responseReservacionOutput: ResponseReservacionOutput){
+  async nuevaReservacion(createReservacionInput: CreateReservacionInput, responseRO: ResponseReservacionOutput){
 
-    const reservacion = this.reservacionesRepository.create(createReservacionInput);
+    const pre_reservacion = await this.reservacionRepositorio.create(createReservacionInput);
+    
+    if(pre_reservacion){
 
-    if(!reservacion){
-      throw new ConflictException('Ocurrió un error al registrar su reservacion')
+      const response = Object.assign(responseRO, createReservacionInput);
 
-    } else{
+      if(response){
 
-      //Obtener el día
-      const fechaActual = new Date();
-      responseReservacionOutput.fecha_reserva = fechaActual.toLocaleDateString('es-ES');
+      //Obtiene la fecha actual del sistema
+      //Atender formatos de hora
+      const fecha_hoy = new Date();
+      fecha_hoy.setHours(0,0,0,0);
+      responseRO.fecha_reserva = fecha_hoy;
 
       //Obtener la hora
       const hora = new Date();
       const hora_actual = `${hora.getHours()}:${hora.getMinutes()}:${hora.getSeconds()}`;
-      responseReservacionOutput.hora = hora_actual;
+      responseRO.hora = hora_actual;
+
       
+
+
+
+
+
+      }
+
+      throw new ConflictException('Ocurrió un error al registrar su reservacion')
+
     }
+
+
   }
-
-
 }

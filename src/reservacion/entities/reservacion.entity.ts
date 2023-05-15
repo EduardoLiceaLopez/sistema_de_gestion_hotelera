@@ -1,46 +1,60 @@
-import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
-import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
-import { Column, Entity, In, PrimaryColumn } from 'typeorm';
+import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('reservaciones')
 @ObjectType()
 export class Reservacion {
 
-  @PrimaryColumn()
-  @Field(()=> Int, {nullable: false})
+  @PrimaryGeneratedColumn()
+  @Field(() => Int, { description: 'Example field (placeholder)' })
   id: number;
 
   @Column()
-  @Field(() => Int)
-  numero_huespedes: number;
+  @Field()
+  num_huespedes: number;
 
-  @Field(()=>Int)
+  @Column()
+  @Field()
+  num_cuartos: number;
+
+  @Column()
+  @Field()
+  fecha_reserva: number;
+
+  @Column()
+  @Field()
+  periodo: number;
+
+  @Column()
+  @Field()
+  monto: number;
+
+  @Column()
+  @Field()
+  habitacion_id: number;
+
+  @Column()
+  @Field()
   persona_id: number;
 
   @Column()
-  @Field(()=> String)
-  fecha_reserva: string;
+  @Field()
+  hora: string;
 
   @Column()
   @Field()
-  fecha_inicio: string;
+  fecha_inicio: Date;
 
   @Column()
   @Field()
-  fecha_fin: string;
+  fecha_final: Date;
 
   @Column()
-  @Field(()=> String)
+  @Field()
   hora_registro: string;
 
   @Column()
-  @Field(()=>String)
-  periodo: string;
-
-  @Column()
-  @Field(()=> Float)
-  monto: number;
-
-
+  @Field()
+  cantidad_habitaciones: number;
 
 }
