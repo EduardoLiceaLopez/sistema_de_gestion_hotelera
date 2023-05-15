@@ -40,7 +40,7 @@ CREATE TABLE habitacion(
 
 CREATE TABLE user_access(
 	id Int AUTO_INCREMENT NOT NULL,
-	correo Varchar(100) NOT NULL,
+	correo Varchar(100) NOT NULL UNIQUE,
     contrasenia Varchar(50) NOT NULL,
     usuarios_id Int NOT NULL,
 	PRIMARY KEY (id),

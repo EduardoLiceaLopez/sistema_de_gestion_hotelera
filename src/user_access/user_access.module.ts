@@ -7,12 +7,12 @@ import { UserAccess } from './entities/user_access.entity';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
-//import { AdminGuard } from 'src/Roles/admin.guard';
-//import { UserGuard } from 'src/Roles/user.guard';
+import { AdminGuard } from 'src/roles/admin.guard';
+import { UserGuard } from 'src/roles/user.guard';
 
 @Module({
   imports: [TypeOrmModule.forFeature([UserAccess]), UserAccessModule, UsuariosModule],
-  providers: [UserAccessResolver, UserAccessService/*, AdminGuard, UserGuard*/],
+  providers: [UserAccessResolver, UserAccessService, AdminGuard, UserGuard],
   exports: [UserAccessService],
 })
 export class UserAccessModule {}

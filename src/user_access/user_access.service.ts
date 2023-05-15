@@ -1,8 +1,7 @@
 import { Injectable, NotFoundException, Query, UseGuards } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
-//Completar guards ...
-import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 
+import { JwtAuthGuard } from 'src/auth/jwt-auth.guard';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { FindOneOptions, Repository } from 'typeorm';
