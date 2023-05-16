@@ -1,4 +1,4 @@
-import { InputType, Int, Field } from '@nestjs/graphql';
+import { InputType, Int, Field, Float } from '@nestjs/graphql';
 
 @InputType()
 export class CreateReservacionInput {
@@ -6,26 +6,27 @@ export class CreateReservacionInput {
   num_huespedes: number;
 
   //Por ahora lo dará el cliente
-  @Field()
+  @Field(()=>Int)
   num_cuartos: number
 
-  @Field()
+  @Field(()=>Date)
   fecha_inicio: Date;
 
-  @Field()
+  @Field(()=> Date)
   fecha_final: Date;
 
   //Por ahora lo da el cliente
-  @Field()
+  @Field(()=>Float)
   monto: number;
 
-  @Field()
+  @Field(()=> Int)
   habitacion_id: number;
 
-  @Field()
+  @Field(()=>Int)
   persona_id: number;
 
   //Por ahora lo dará el cliente
+  @Field(()=> Int)
   cantidad_habitaciones: number;
 
 }

@@ -31,6 +31,7 @@ import { ReservacionModule } from './reservacion/reservacion.module';
     password: 'liceedu12',
     autoLoadEntities: true,
     synchronize: false,
+    timezone: 'America/Mexico_City',
   }),
   UsuariosModule,
   TipoUsuariosModule,

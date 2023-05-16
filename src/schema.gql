@@ -11,12 +11,16 @@ input CreateHabitacionInput {
 }
 
 input CreateReservacionInput {
+  cantidad_habitaciones: Int!
   fecha_final: DateTime!
   fecha_inicio: DateTime!
-  habitacion_id: Float!
-  num_habitaciones: Float!
-  num_huespedes: Float!
-  persona_id: Float!
+  habitacion_id: Int!
+  monto: Float!
+  num_cuartos: Int!
+
+  """Example field (placeholder)"""
+  num_huespedes: Int!
+  persona_id: Int!
 }
 
 input CreateTipoHabitacionInput {
@@ -67,7 +71,6 @@ type Mutation {
   removeHabitacion(id: Int!): Habitacion!
   removeReservacion(id: Int!): Reservacion!
   removeTipoHabitacion(id: Int!): TipoHabitacion!
-  reservacionCliente(createReservacionInput: CreateReservacionInput!): Reservacion!
   updateHabitacion(updateHabitacionInput: UpdateHabitacionInput!): Habitacion!
   updateReservacion(updateReservacionInput: UpdateReservacionInput!): Reservacion!
   updateTipoHabitacion(updateTipoHabitacionInput: UpdateTipoHabitacionInput!): TipoHabitacion!
@@ -85,19 +88,20 @@ type Query {
 }
 
 type Reservacion {
-  cantidad_habitaciones: Int!
+  cantidad_habitaciones: Float!
   fecha_final: DateTime!
   fecha_inicio: DateTime!
-  fecha_reserva: String!
-  habitacion_id: Int!
-  hora: DateTime!
+  fecha_reserva: DateTime!
+  habitacion_id: Float!
   hora_registro: String!
+
+  """Example field (placeholder)"""
   id: Int!
   monto: Float!
-  num_habitaciones: Int!
-  num_huespedes: Int!
-  periodo: Int!
-  persona_id: Int!
+  num_cuartos: Float!
+  num_huespedes: Float!
+  periodo: Float!
+  persona_id: Float!
 }
 
 type TipoHabitacion {
@@ -122,13 +126,17 @@ input UpdateHabitacionInput {
 }
 
 input UpdateReservacionInput {
+  cantidad_habitaciones: Int
   fecha_final: DateTime
   fecha_inicio: DateTime
-  habitacion_id: Float
+  habitacion_id: Int
   id: Int!
-  num_habitaciones: Float
-  num_huespedes: Float
-  persona_id: Float
+  monto: Float
+  num_cuartos: Int
+
+  """Example field (placeholder)"""
+  num_huespedes: Int
+  persona_id: Int
 }
 
 input UpdateTipoHabitacionInput {

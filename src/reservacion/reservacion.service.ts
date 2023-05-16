@@ -1,10 +1,10 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
-import { ResponseReservacionOutput } from './dto/response-reservacion-output';
 import { Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { differenceInDays } from 'date-fns';
 
 @Injectable()
 export class ReservacionService {
@@ -18,8 +18,44 @@ export class ReservacionService {
   }
 
 
-  create(createReservacionInput: CreateReservacionInput) {
-    return 'This action adds a new reservacion';
+  async create(createReservacionInput: CreateReservacionInput) {
+
+    const pre_reserva = this.reservacionRepositorio.create(createReservacionInput);
+    
+
+
+    //Obtiene la hora
+    const fecha_hoy = new Date();
+    fecha_hoy.setHours(0,0,0,0);
+
+    //Obtiene la hora
+    const hora = new Date();
+    const hora_actual = `${hora.getHours()}:${hora.getMinutes()}:${hora.getSeconds()}`;
+
+
+    //Para valor absoluto Math.abs
+    const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
+
+  const reservacion = new Reservacion();
+
+  reservacion.fecha_reserva = fecha_hoy;
+  reservacion.hora_registro = hora_actual;
+  reservacion.fecha_inicio = pre_reserva.fecha_inicio;
+  reservacion.fecha_final = pre_reserva.fecha_final;
+  reservacion.num_huespedes = pre_reserva.num_huespedes;
+  reservacion.cantidad_habitaciones = pre_reserva.cantidad_habitaciones;
+  reservacion.habitacion_id = pre_reserva.habitacion_id;
+  reservacion.persona_id = pre_reserva.persona_id;
+  reservacion.num_cuartos = pre_reserva.num_cuartos;
+  reservacion.monto = pre_reserva.monto;
+  reservacion.periodo = periodo;
+  reservacion.id = pre_reserva.id;
+
+
+ const reservaDOne = await this.reservacionRepositorio.save(reservacion);
+
+
+  return reservaDOne;
   }
 
   findAll() {
@@ -38,39 +74,5 @@ export class ReservacionService {
     return `This action removes a #${id} reservacion`;
   }
 
-  async nuevaReservacion(createReservacionInput: CreateReservacionInput, responseRO: ResponseReservacionOutput){
-
-    const pre_reservacion = await this.reservacionRepositorio.create(createReservacionInput);
-    
-    if(pre_reservacion){
-
-      const response = Object.assign(responseRO, createReservacionInput);
-
-      if(response){
-
-      //Obtiene la fecha actual del sistema
-      //Atender formatos de hora
-      const fecha_hoy = new Date();
-      fecha_hoy.setHours(0,0,0,0);
-      responseRO.fecha_reserva = fecha_hoy;
-
-      //Obtener la hora
-      const hora = new Date();
-      const hora_actual = `${hora.getHours()}:${hora.getMinutes()}:${hora.getSeconds()}`;
-      responseRO.hora = hora_actual;
-
-      
-
-
-
-
-
-      }
-
-      throw new ConflictException('Ocurrió un error al registrar su reservacion')
-
-    }
-
-
-  }
+ 
 }

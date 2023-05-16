@@ -4,6 +4,8 @@ import { Reservacion } from './entities/reservacion.entity';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
 
+
+
 @Resolver(() => Reservacion)
 export class ReservacionResolver {
   constructor(private readonly reservacionService: ReservacionService) {}
@@ -32,4 +34,7 @@ export class ReservacionResolver {
   removeReservacion(@Args('id', { type: () => Int }) id: number) {
     return this.reservacionService.remove(id);
   }
+
+
+
 }

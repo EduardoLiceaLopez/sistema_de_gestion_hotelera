@@ -1,7 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
-@Entity('reservaciones')
+@Entity('reservas')
 @ObjectType()
 export class Reservacion {
 
@@ -19,7 +19,7 @@ export class Reservacion {
 
   @Column()
   @Field()
-  fecha_reserva: number;
+  fecha_reserva: Date;
 
   @Column()
   @Field()
@@ -36,10 +36,6 @@ export class Reservacion {
   @Column()
   @Field()
   persona_id: number;
-
-  @Column()
-  @Field()
-  hora: string;
 
   @Column()
   @Field()
