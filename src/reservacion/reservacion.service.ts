@@ -62,16 +62,6 @@ export class ReservacionService {
   reservacion.periodo = periodo;
   reservacion.id = pre_reserva.id;
 
-
-  /**
-   * const reservation = new Reservation();
-reservation.habitacion_id = habitacionId1;
-reservation.habitaciones = [habitacion1, habitacion2];
-
-await repository.reservations.save(reservation);
-   */
-
-
   //Espera para asi obtener el id
  const reservaDOne = await this.reservacionRepositorio.save(reservacion);
 

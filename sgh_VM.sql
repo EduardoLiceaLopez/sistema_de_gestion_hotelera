@@ -27,16 +27,18 @@ CREATE TABLE cliente(
 
 CREATE TABLE tipo_habitacion(
 	id Int AUTO_INCREMENT PRIMARY KEY auto_increment,
-	tipo Varchar(50) NOT NULL
+	tipo Varchar(50) NOT NULL,
+	capacidad INT NOT NULL,
 );
 
 CREATE TABLE habitacion(
 	id Int auto_increment PRIMARY KEY,
 	estado Varchar(50) NULL,
-	precio Varchar(50) NOT NULL,
+	precio Float NOT NULL,
     ubicacion Varchar(50) NOT NULL,
     tipo_habitacion_id Int NOT NULL,
 	FOREIGN KEY (tipo_habitacion_id) REFERENCES tipo_habitacion(id)
+
 );
 
 /*
@@ -83,7 +85,7 @@ CREATE TABLE reservas(
 	num_cuartos varchar(3) NOT NULL,
 	fecha_reserva Date NOT NULL,
     periodo INT NOT NULL,
-    monto VARCHAR(10) NOT NULL,
+    monto FLOAT NOT NULL,
     habitacion_id Int NOT NULL,
     persona_id Int NOT NULL,
 	fecha_inicio DATE NOT NULL,

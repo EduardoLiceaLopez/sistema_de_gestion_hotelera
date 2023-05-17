@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
@@ -30,10 +30,9 @@ export class Reservacion {
   @Field()
   periodo: number;
 
-  @Column()
-  @Field()
-  monto: string; //Era number
-
+  @Column("decimal", { precision: 10, scale: 2 })
+  @Field(()=> Float)
+  monto: number;
 
 
   @Column()

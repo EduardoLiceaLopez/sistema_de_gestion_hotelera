@@ -17,7 +17,7 @@ export class ReservacionResolver {
     return this.reservacionService.create(createReservacionInput);
   }
 
-  @Query(() => [Reservacion], { name: 'reservacion' })
+  @Query(() => [Reservacion], { name: 'reservaciones' })
   findAll() {
     return this.reservacionService.findAll();
   }

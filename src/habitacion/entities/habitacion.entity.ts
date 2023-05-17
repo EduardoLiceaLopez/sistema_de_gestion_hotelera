@@ -1,4 +1,4 @@
-import { ObjectType, Field, Int } from '@nestjs/graphql';
+import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { TipoHabitacion } from '../../tipo_habitacion/entities/tipo_habitacion.entity';
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
@@ -26,12 +26,16 @@ export class Habitacion{
   estado: string;
 
   @Column()
-  @Field(()=>String)
-  precio: string;
+  @Field(()=>Float)
+  precio: number;
 
   @Column()
   @Field(()=>String)
   ubicacion: string;
+
+  @Column()
+  @Field(()=> Int)
+  capacidad_max: number;
 
 
   @OneToMany(()=> Reservacion, (reservacion) => reservacion.habitacion, {cascade: true, nullable: true})
