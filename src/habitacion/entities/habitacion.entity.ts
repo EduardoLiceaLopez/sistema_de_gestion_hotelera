@@ -33,11 +33,7 @@ export class Habitacion{
   @Field(()=>String)
   ubicacion: string;
 
-  @Column()
-  @Field(()=> Int)
-  capacidad_max: number;
-
-
+  
   @OneToMany(()=> Reservacion, (reservacion) => reservacion.habitacion, {cascade: true, nullable: true})
   @Field(()=> [Reservacion], {nullable: true})
   reservacion: Reservacion[];
