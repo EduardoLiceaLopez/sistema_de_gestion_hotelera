@@ -16,8 +16,11 @@ export class CreateReservacionInput {
   fecha_final: Date;
 
   //Por ahora lo da el cliente
+
+  /*
   @Field(()=>Float)
   monto: number;
+  */
 
   @Field(()=> Int)
   habitacion_id: number;

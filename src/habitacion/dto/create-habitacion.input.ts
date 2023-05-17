@@ -1,8 +1,12 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { TipoHabitacion } from '../../tipo_habitacion/entities/tipo_habitacion.entity';
+import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
+import { Entity } from 'typeorm';
 
 @InputType()
 export class CreateHabitacionInput {
+
+  @Field(()=> Int)
+  id: number;
 
   @Field(()=> Int)
   tipo_habitacion_id: number;
@@ -10,15 +14,12 @@ export class CreateHabitacionInput {
   @Field(()=>String)
   estado: string;
 
-
-  @Field(()=>String)
-  numero_habitacion: string;
-
-
   @Field(()=>String)
   precio: string;
 
 
   @Field(()=>String)
   ubicacion: string;
+
+
 }

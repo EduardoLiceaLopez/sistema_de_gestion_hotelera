@@ -5,6 +5,8 @@ import { Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { differenceInDays } from 'date-fns';
+import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
+import { HabitacionService } from 'src/habitacion/habitacion.service';
 
 @Injectable()
 export class ReservacionService {
@@ -13,6 +15,11 @@ export class ReservacionService {
 
     @InjectRepository(Reservacion)
     private reservacionRepositorio: Repository<Reservacion>,
+
+    @InjectRepository(Habitacion)
+    private habitacionRepository: Repository<Habitacion>,
+
+    private habitacionService: HabitacionService,
   ){
 
   }
@@ -22,8 +29,6 @@ export class ReservacionService {
 
     const pre_reserva = this.reservacionRepositorio.create(createReservacionInput);
     
-
-
     //Obtiene la hora
     const fecha_hoy = new Date();
     fecha_hoy.setHours(0,0,0,0);
@@ -36,6 +41,12 @@ export class ReservacionService {
     //Para valor absoluto Math.abs
     const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
 
+    //Calcular el monto
+    const habitacion = this.getHabitacion(pre_reserva.habitacion_id);
+    const monto = (await habitacion).precio;
+
+
+
   const reservacion = new Reservacion();
 
   reservacion.fecha_reserva = fecha_hoy;
@@ -47,23 +58,34 @@ export class ReservacionService {
   reservacion.habitacion_id = pre_reserva.habitacion_id;
   reservacion.persona_id = pre_reserva.persona_id;
   reservacion.num_cuartos = pre_reserva.num_cuartos;
-  reservacion.monto = pre_reserva.monto;
+  reservacion.monto = monto;
   reservacion.periodo = periodo;
   reservacion.id = pre_reserva.id;
 
 
- const reservaDOne = await this.reservacionRepositorio.save(reservacion);
+  /**
+   * const reservation = new Reservation();
+reservation.habitacion_id = habitacionId1;
+reservation.habitaciones = [habitacion1, habitacion2];
 
+await repository.reservations.save(reservation);
+   */
+
+
+  //Espera para asi obtener el id
+ const reservaDOne = await this.reservacionRepositorio.save(reservacion);
 
   return reservaDOne;
   }
 
   findAll() {
-    return `This action returns all reservacion`;
+    return this.reservacionRepositorio.find();
   }
 
   findOne(id: number) {
-    return `This action returns a #${id} reservacion`;
+    return this.reservacionRepositorio.findOne({
+      where: {id},
+    });
   }
 
   update(id: number, updateReservacionInput: UpdateReservacionInput) {
@@ -74,5 +96,9 @@ export class ReservacionService {
     return `This action removes a #${id} reservacion`;
   }
 
- 
+  
+  getHabitacion(id: number): Promise<Habitacion>{
+    return this.habitacionService.findOne(id) ;
+  }
+   
 }

@@ -8,6 +8,7 @@ import { TipoHabitacionModule } from '../tipo_habitacion/tipo_habitacion.module'
 
 @Module({
   imports: [TypeOrmModule.forFeature([Habitacion, TipoHabitacion]), TipoHabitacionModule],
-  providers: [HabitacionResolver, HabitacionService]
+  providers: [HabitacionResolver, HabitacionService],
+  exports: [HabitacionService]
 })
 export class HabitacionModule {}

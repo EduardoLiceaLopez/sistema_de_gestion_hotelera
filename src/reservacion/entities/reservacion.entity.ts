@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
-import { Column, Entity, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
+import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
+import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('reservas')
 @ObjectType()
@@ -9,6 +10,8 @@ export class Reservacion {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   id: number;
 
+
+  //Pendientes
   @Column()
   @Field()
   num_huespedes: number;
@@ -16,6 +19,8 @@ export class Reservacion {
   @Column()
   @Field()
   num_cuartos: number;
+//
+
 
   @Column()
   @Field()
@@ -27,11 +32,18 @@ export class Reservacion {
 
   @Column()
   @Field()
-  monto: number;
+  monto: string; //Era number
+
+
 
   @Column()
-  @Field()
+  @Field(()=> Int)
   habitacion_id: number;
+
+  @ManyToOne(()=> Habitacion, (habitacion)=> habitacion.reservacion)
+  @JoinColumn({name: 'habitacion_id'})
+  @Field(()=> Habitacion, {nullable: true})
+  habitacion: Habitacion;
 
   @Column()
   @Field()
