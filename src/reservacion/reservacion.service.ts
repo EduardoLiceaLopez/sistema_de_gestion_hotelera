@@ -1,7 +1,7 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
-import { Equal, LessThanOrEqual, Repository } from 'typeorm';
+import { Equal, LessThan, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { differenceInDays } from 'date-fns';
@@ -45,25 +45,35 @@ export class ReservacionService {
     const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
 
         //Asignar habitacion
-        const num_huespedes = pre_reserva.num_huespedes;
 
-        const habitacionCupo = this.habitacionRepository.findOne({
-          where: {
-            capacidad: Equal(num_huespedes),
-            estado: Equal('libre')
-          }
-        })
-    
-        if (habitacionCupo){
-          (await habitacionCupo).estado = 'ocupada';
-          await this.habitacionRepository.update((await habitacionCupo).id, { estado: 'ocupada' });
+        // Asignar habitacion
+const num_huespedes = pre_reserva.num_huespedes;
 
+let habitacionCupo = await this.habitacionRepository.findOne({
+  where: {
+    capacidad: num_huespedes,
+    estado: 'libre'
+  }
+});
 
-           pre_reserva.habitacion_id = (await habitacionCupo).id
+if (!habitacionCupo) {
+  habitacionCupo = await this.habitacionRepository.findOne({
+    where: {
+      capacidad: MoreThan(num_huespedes),
+      estado: 'libre'
+    }
+  });
+}
 
-        } else {
-          throw new ConflictException('JEJEJEEJE');
-        }
+if (habitacionCupo) {
+  habitacionCupo.estado = 'ocupada';
+  await this.habitacionRepository.update(habitacionCupo.id, { estado: 'ocupada' });
+  pre_reserva.habitacion_id = habitacionCupo.id;
+} else {
+  throw new ConflictException('No hay habitaciones disponibles para el número de huéspedes especificado.');
+}
+
+        
 
 
     //Calcular el monto
