@@ -31,6 +31,13 @@ input CreateTipoUsuarioInput {
   nombre: String!
 }
 
+input CreateUserAccessInput {
+  contrasenia: String!
+  correo: String!
+  role_usuario: String!
+  usuario_id: Int!
+}
+
 input CreateUsuarioInput {
   apMaterno: String
   apPaterno: String!
@@ -59,6 +66,16 @@ type Habitacion {
   ubicacion: String!
 }
 
+type LoginResponse {
+  access_token: String!
+  userAccess: UserAccess!
+}
+
+input LoginUserInput {
+  contrasenia: String!
+  correo: String!
+}
+
 type Mutation {
   actualizarTipoUsuario(updateTipoUsuarioInput: UpdateTipoUsuarioInput!): TipoUsuario!
   actualizarUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
@@ -69,23 +86,30 @@ type Mutation {
   createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
   createReservacion(createReservacionInput: CreateReservacionInput!): Reservacion!
   createTipoHabitacion(createTipoHabitacionInput: CreateTipoHabitacionInput!): TipoHabitacion!
+  createUserAccess(userAccessInput: CreateUserAccessInput!): UserAccess!
   removeHabitacion(id: Int!): Habitacion!
   removeReservacion(id: Int!): Reservacion!
   removeTipoHabitacion(id: Int!): TipoHabitacion!
+  removeUserAccess(id: Int!): Boolean!
+  signup(signupUserInput: CreateUserAccessInput!): UserAccess!
   updateHabitacion(updateHabitacionInput: UpdateHabitacionInput!): Habitacion!
   updateReservacion(updateReservacionInput: UpdateReservacionInput!): Reservacion!
   updateTipoHabitacion(updateTipoHabitacionInput: UpdateTipoHabitacionInput!): TipoHabitacion!
+  updateUserAccess(updateUserAccess: UpdateUserAccessInput!): UserAccess!
 }
 
 type Query {
   habitacion(id: Int!): Habitacion!
   habitaciones: [Habitacion!]!
+  login(loginUserInput: LoginUserInput!): LoginResponse
   reservacion(id: Int!): Reservacion!
   reservaciones: [Reservacion!]!
   tipoHabitacion(id: Int!): TipoHabitacion!
   tipoHabitaciones: [TipoHabitacion!]!
   tipoUsuario(id: Float!): TipoUsuario!
   tipoUsuarios: [TipoUsuario!]!
+  userAccess(user_name: String!): UserAccess!
+  usersAccess: [UserAccess!]!
   usuario(id: Float!): Usuario!
   usuarios: [Usuario!]!
 }
@@ -152,6 +176,14 @@ input UpdateTipoUsuarioInput {
   nombre: String
 }
 
+input UpdateUserAccessInput {
+  contrasenia: String
+  correo: String
+  id: Int!
+  role_usuario: String
+  usuario_id: Int
+}
+
 input UpdateUsuarioInput {
   apMaterno: String
   apPaterno: String
@@ -162,6 +194,16 @@ input UpdateUsuarioInput {
   tipo_usuario_id: Int
 }
 
+type UserAccess {
+  contrasenia: String!
+  correo: String!
+  id: Float!
+  role_usuario: String!
+  user: Usuario!
+  usuario: Usuario @deprecated(reason: "Este campo ha cambiado su valor")
+  usuario_id: Int!
+}
+
 type Usuario {
   apMaterno: String
   apPaterno: String!
@@ -170,7 +212,9 @@ type Usuario {
   nombre: String!
   numTelefono: String!
   reservacion: [Reservacion!]
+  reservaciones: [Reservacion!]!
   tipoUsuario: TipoUsuario!
   tipo_usuario: TipoUsuario @deprecated(reason: "Este campo ha cambiado su valor")
   tipo_usuario_id: Float!
+  user_access: [UserAccess!]
 }

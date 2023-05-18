@@ -95,3 +95,13 @@ CREATE TABLE reservas(
 	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
 	FOREIGN KEY (persona_id) REFERENCES usuarios(id)
 );
+
+CREATE TABLE user_access(
+	id INT auto_increment PRIMARY KEY,
+	correo VARCHAR(50) NOT NULL,
+	contrasenia VARCHAR(200) NOT NULL,
+	usuario_id INT NOT NULL,
+	role_usuario VARCHAR(20) NOT NULL,
+
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);

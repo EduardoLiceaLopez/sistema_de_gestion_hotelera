@@ -4,6 +4,7 @@ import { Usuario } from './entities/usuario.entity';
 import { CreateUsuarioInput } from './dto/create-usuario.input';
 import { UpdateUsuarioInput } from './dto/update-usuario.input';
 import { TipoUsuario } from '../tipo_usuarios/entities/tipo_usuario.entity';
+import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
 
 @Resolver(() => Usuario)
 export class UsuariosResolver {
@@ -70,6 +71,13 @@ export class UsuariosResolver {
   @Mutation((returns)=> String, {name: 'borrarUsuario'})
   remove(@Args('id') id: number): Promise<Boolean>{
     return this.usuariosServicio.remove(id);
+  }
+
+
+  //Trae las reservaciones
+  @ResolveField(() => [Reservacion])
+  async reservaciones(@Parent() usuario: Usuario): Promise<Reservacion[]> {
+    return this.usuariosServicio.getReservaciones(usuario.id);
   }
 
 }
