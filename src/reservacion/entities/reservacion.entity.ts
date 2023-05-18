@@ -1,5 +1,6 @@
 import { ObjectType, Field, Int, Float } from '@nestjs/graphql';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { Column, Entity, JoinColumn, ManyToOne, OneToMany, OneToOne, PrimaryColumn, PrimaryGeneratedColumn } from 'typeorm';
 
 @Entity('reservas')
@@ -47,6 +48,12 @@ export class Reservacion {
   @Column()
   @Field()
   persona_id: number;
+
+
+  @ManyToOne(()=> Usuario, (usuario)=> usuario.reservacion)
+  @JoinColumn({name: 'persona_id'})
+  @Field(()=> Usuario, {nullable: true})
+  usuario: Usuario;
 
   @Column()
   @Field()

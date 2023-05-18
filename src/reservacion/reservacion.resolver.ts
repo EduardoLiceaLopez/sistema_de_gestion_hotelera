@@ -5,6 +5,7 @@ import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { ConflictException } from '@nestjs/common';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
 
 
 
@@ -47,6 +48,19 @@ export class ReservacionResolver {
 
     } else {
       throw new ConflictException("No se encontro la habitacion asociada");
+    }
+  }
+
+  //Usuarios
+  @ResolveField((returns)=> Usuario)
+  async usuario(@Parent() reservacion: Reservacion): Promise<Usuario>{
+    const usuario = await this.reservacionService.getUsuario(reservacion.persona_id)
+
+    if (usuario){
+      return usuario;
+
+    } else {
+      throw new ConflictException("No se encontro el usuario asociado");
     }
   }
   

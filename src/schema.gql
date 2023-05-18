@@ -106,6 +106,7 @@ type Reservacion {
   num_huespedes: Float!
   periodo: Float!
   persona_id: Float!
+  usuario: Usuario
 }
 
 type TipoHabitacion {
@@ -168,6 +169,7 @@ type Usuario {
   id: Float!
   nombre: String!
   numTelefono: String!
+  reservacion: [Reservacion!]
   tipoUsuario: TipoUsuario!
   tipo_usuario: TipoUsuario @deprecated(reason: "Este campo ha cambiado su valor")
   tipo_usuario_id: Float!

@@ -9,6 +9,8 @@ import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { HabitacionService } from 'src/habitacion/habitacion.service';
 import { TipoHabitacion } from 'src/tipo_habitacion/entities/tipo_habitacion.entity';
 import { format } from 'path';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { UsuariosService } from 'src/usuarios/usuarios.service';
 
 @Injectable()
 export class ReservacionService {
@@ -22,6 +24,8 @@ export class ReservacionService {
     private habitacionRepository: Repository<Habitacion>,
 
     private habitacionService: HabitacionService,
+
+    private usuarioService: UsuariosService,
   ){
 
   }
@@ -63,6 +67,7 @@ if (!habitacionCupo) {
       estado: 'libre'
     }
   });
+
 }
 
 if (habitacionCupo) {
@@ -125,5 +130,8 @@ if (habitacionCupo) {
     return this.habitacionService.findOne(id) ;
   }
 
+  getUsuario(id: number): Promise<Usuario>{
+    return this.usuarioService.findOne(id);
+  }
    
 }

@@ -15,7 +15,7 @@ CREATE TABLE usuarios(
 	apMaterno VARCHAR(50) NOT NULL,
 	fech_nacimiento DATE NOT NULL,
 	numTelefono VARCHAR(15) NOT NULL,
-	tipo_usuario_id INT NOT NULL
+	tipo_usuario_id INT NOT NULL,
 
 	FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id)
 );
@@ -92,5 +92,6 @@ CREATE TABLE reservas(
 	fecha_final DATE NOT NULL,
 	hora_registro Varchar(10),
 	cantidad_habitaciones INT NOT NULL,
-	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id)
+	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
+	FOREIGN KEY (persona_id) REFERENCES usuarios(id)
 );
