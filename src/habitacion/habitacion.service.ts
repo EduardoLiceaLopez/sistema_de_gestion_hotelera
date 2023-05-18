@@ -33,16 +33,13 @@ export class HabitacionService {
   }
 
   //Muestra solo uno (según el id dado) de los usuarios
-  async findOne(num_habitacion: number): Promise<Habitacion> {
-    const usuario = await this.habitacionRepositorio.findOne({
-      where:{
-        num_habitacion,
-      }
-    })
+  async findOne(id: number): Promise<Habitacion> {
+    const usuario = await this.habitacionRepositorio.findOneBy({id: id})
+
     if(usuario){
       return usuario;
     } else{
-      throw new NotFoundException(`La habitación  ${num_habitacion} no fue econtrada o no existe`);
+      throw new NotFoundException(`La habitación  ${id} no fue econtrada o no existe`);
     }
   }
 
@@ -56,31 +53,31 @@ export class HabitacionService {
 
 
   //UPDATE
-  async update(num_habitacion: number, updateHabitacionInput: UpdateHabitacionInput): Promise<Habitacion> {
-    const habitacion = await this.habitacionRepositorio.findOneBy({num_habitacion: num_habitacion})
+  async update(id: number, updateHabitacionInput: UpdateHabitacionInput): Promise<Habitacion> {
+    const habitacion = await this.habitacionRepositorio.findOneBy({id: id})
 
     if(habitacion){
-      await this.habitacionRepositorio.update(num_habitacion, updateHabitacionInput);
-      return this.habitacionRepositorio.findOneBy({num_habitacion: num_habitacion})
+      await this.habitacionRepositorio.update(id, updateHabitacionInput);
+      return this.habitacionRepositorio.findOneBy({id: id})
     } else {
-      throw new NotFoundException (`La habitacion ${num_habitacion} no fue econtrada o no existe`);
+      throw new NotFoundException (`La habitacion ${id} no fue econtrada o no existe`);
     }
   }
 
   //DELETE
-  async remove(num_habitacion: number): Promise<Boolean> {
+  async remove(id: number): Promise<Boolean> {
     const habitacion = await this.habitacionRepositorio.findOne({
-      where: {num_habitacion}
+      where: {id}
     })
 
     if (habitacion){
-      const resultado = await this.habitacionRepositorio.delete(num_habitacion);
+      const resultado = await this.habitacionRepositorio.delete(id);
       
       if (resultado.affected !==0){
         return true;
       }
     } else {
-      throw new NotFoundException(`Habitacion con el ID ${num_habitacion} no fue econtrado o no existe`);
+      throw new NotFoundException(`Habitacion con el ID ${id} no fue econtrado o no existe`);
     }
 
   }

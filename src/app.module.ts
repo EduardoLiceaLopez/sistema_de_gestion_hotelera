@@ -17,6 +17,7 @@ import { UserAccessModule } from './user_access/user_access.module';
 
 
 
+
 @Module({
   imports: [GraphQLModule.forRoot<ApolloDriverConfig>({
     driver: ApolloDriver,
@@ -32,6 +33,7 @@ import { UserAccessModule } from './user_access/user_access.module';
     password: 'liceedu12',
     autoLoadEntities: true,
     synchronize: false,
+    timezone: 'America/Mexico_City',
   }),
   UsuariosModule,
   TipoUsuariosModule,

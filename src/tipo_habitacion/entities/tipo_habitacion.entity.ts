@@ -14,8 +14,6 @@ export class TipoHabitacion {
   @Field(()=>String)
   tipo: string;
 
-  @OneToOne(() => Habitacion, (habitacion) => habitacion.tipo_habitacion, {cascade: true, nullable: true})
-  @JoinColumn()
-  habitacion?: Habitacion;
-
+  @OneToMany(() => Habitacion, (habitacion) => habitacion.tipo_habitacion, {cascade: true, nullable: true})
+  habitacion?: Habitacion[];
 }

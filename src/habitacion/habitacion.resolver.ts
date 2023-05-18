@@ -15,7 +15,7 @@ export class HabitacionResolver {
     return this.habitacionService.create(createHabitacionInput);
   }
 
-  @Query(() => [Habitacion], { name: 'habitacion' })
+  @Query(() => [Habitacion], { name: 'habitaciones' })
   findAll() {
     return this.habitacionService.findAll();
   }
@@ -24,6 +24,7 @@ export class HabitacionResolver {
   findOne(@Args('id', { type: () => Int }) id: number) {
     return this.habitacionService.findOne(id);
   }
+  
   @ResolveField((returns)=> TipoHabitacion)
   async tipohabitacion(@Parent() habitacion: Habitacion): Promise<TipoHabitacion>{
     const tipoHab = await this.habitacionService.getTipoHabitacion(habitacion.tipo_habitacion_id);
