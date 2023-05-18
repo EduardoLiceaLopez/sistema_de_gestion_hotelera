@@ -15,7 +15,7 @@ CREATE TABLE usuarios(
 	apMaterno VARCHAR(50) NOT NULL,
 	fech_nacimiento DATE NOT NULL,
 	numTelefono VARCHAR(15) NOT NULL,
-	tipo_usuario_id INT NOT NULL,
+	tipo_usuario_id INT NOT NULL
 
 	FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id)
 );
@@ -27,8 +27,7 @@ CREATE TABLE cliente(
 
 CREATE TABLE tipo_habitacion(
 	id Int AUTO_INCREMENT PRIMARY KEY auto_increment,
-	tipo Varchar(50) NOT NULL,
-	capacidad INT NOT NULL,
+	tipo Varchar(50) NOT NULL
 );
 
 CREATE TABLE habitacion(
@@ -37,6 +36,7 @@ CREATE TABLE habitacion(
 	precio Float NOT NULL,
     ubicacion Varchar(50) NOT NULL,
     tipo_habitacion_id Int NOT NULL,
+	capacidad INT NOT NULL,
 	FOREIGN KEY (tipo_habitacion_id) REFERENCES tipo_habitacion(id)
 
 );

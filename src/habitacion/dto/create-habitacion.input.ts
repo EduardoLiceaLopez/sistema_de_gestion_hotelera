@@ -21,5 +21,8 @@ export class CreateHabitacionInput {
   @Field(()=>String)
   ubicacion: string;
 
+  @Field(()=> Int)
+  capacidad: number;
+
 
 }

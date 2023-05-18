@@ -16,9 +16,4 @@ export class TipoHabitacion {
 
   @OneToMany(() => Habitacion, (habitacion) => habitacion.tipo_habitacion, {cascade: true, nullable: true})
   habitacion?: Habitacion[];
-
-
-  @Column()
-  @Field(()=> Int)
-  capacidad_max: number;
 }

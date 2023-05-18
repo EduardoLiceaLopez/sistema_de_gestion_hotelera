@@ -1,12 +1,14 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
-import { Repository } from 'typeorm';
+import { Equal, LessThanOrEqual, Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { differenceInDays } from 'date-fns';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { HabitacionService } from 'src/habitacion/habitacion.service';
+import { TipoHabitacion } from 'src/tipo_habitacion/entities/tipo_habitacion.entity';
+import { format } from 'path';
 
 @Injectable()
 export class ReservacionService {
@@ -29,7 +31,7 @@ export class ReservacionService {
 
     const pre_reserva = this.reservacionRepositorio.create(createReservacionInput);
     
-    //Obtiene la hora
+    //Obtiene el dia
     const fecha_hoy = new Date();
     fecha_hoy.setHours(0,0,0,0);
 
@@ -39,12 +41,34 @@ export class ReservacionService {
 
 
     //Para valor absoluto Math.abs
+    //Retorna en entero y en días la diferencia de fechas
     const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
+
+        //Asignar habitacion
+        const num_huespedes = pre_reserva.num_huespedes;
+
+        const habitacionCupo = this.habitacionRepository.findOne({
+          where: {
+            capacidad: Equal(num_huespedes),
+            estado: Equal('libre')
+          }
+        })
+    
+        if (habitacionCupo){
+          (await habitacionCupo).estado = 'ocupada';
+          await this.habitacionRepository.update((await habitacionCupo).id, { estado: 'ocupada' });
+
+
+           pre_reserva.habitacion_id = (await habitacionCupo).id
+
+        } else {
+          throw new ConflictException('JEJEJEEJE');
+        }
+
 
     //Calcular el monto
     const habitacion = this.getHabitacion(pre_reserva.habitacion_id);
     const monto = (await habitacion).precio;
-
 
 
   const reservacion = new Reservacion();
@@ -90,5 +114,6 @@ export class ReservacionService {
   getHabitacion(id: number): Promise<Habitacion>{
     return this.habitacionService.findOne(id) ;
   }
+
    
 }
