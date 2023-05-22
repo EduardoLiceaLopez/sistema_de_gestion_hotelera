@@ -29,7 +29,6 @@ input CreateReservacionInput {
 
   """Example field (placeholder)"""
   num_huespedes: Int!
-  persona_id: Int!
 }
 
 input CreateTipoHabitacionInput {
@@ -200,7 +199,6 @@ input UpdateReservacionInput {
 
   """Example field (placeholder)"""
   num_huespedes: Int
-  persona_id: Int
 }
 
 input UpdateTipoHabitacionInput {

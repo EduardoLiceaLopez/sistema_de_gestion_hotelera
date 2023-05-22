@@ -19,9 +19,11 @@ export class CreateReservacionInput {
 
   No lo debe dar el cliente
   */
+
+  /*
   @Field(()=>Int)
   persona_id: number;
-
+*/
 
   //Por ahora lo dará el cliente
   

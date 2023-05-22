@@ -1,4 +1,4 @@
-import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent } from '@nestjs/graphql';
+import { Resolver, Query, Mutation, Args, Int, ResolveField, Parent, Context } from '@nestjs/graphql';
 import { ReservacionService } from './reservacion.service';
 import { Reservacion } from './entities/reservacion.entity';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
@@ -15,8 +15,8 @@ export class ReservacionResolver {
   constructor(private readonly reservacionService: ReservacionService) {}
 
   @Mutation(() => Reservacion)
-  createReservacion(@Args('createReservacionInput') createReservacionInput: CreateReservacionInput) {
-    return this.reservacionService.create(createReservacionInput);
+  createReservacion(@Args('createReservacionInput') createReservacionInput: CreateReservacionInput, @Context() context) {
+    return this.reservacionService.create(createReservacionInput, context);
   }
 
   @UseGuards(AdminGuard)

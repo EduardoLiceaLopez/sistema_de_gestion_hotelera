@@ -40,7 +40,7 @@ export class AuthService {
         return {
             access_token: this.jwtService.sign({
                 correo: usuario.correo,
-                sub_id: usuario.id,
+                id: usuario.id,
                 name: usuario.nombre,
                 role: usuario.role_usuario,
             }),

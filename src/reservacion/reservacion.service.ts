@@ -9,6 +9,8 @@ import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { HabitacionService } from 'src/habitacion/habitacion.service';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { Context } from '@nestjs/graphql';
+import { JwtService } from '@nestjs/jwt';
 
 @Injectable()
 export class ReservacionService {
@@ -24,12 +26,19 @@ export class ReservacionService {
     private habitacionService: HabitacionService,
 
     private usuarioService: UsuariosService,
+    private readonly jwtService: JwtService,
   ){
 
   }
 
 
-  async create(createReservacionInput: CreateReservacionInput) {
+  async create(createReservacionInput: CreateReservacionInput,  @Context() context) {
+
+    const token = context.req.headers.authorization.replace('Bearer ', '');
+    const payload: any = this.jwtService.decode(token);
+    const usuarioId = payload.id;
+
+    
 
     const pre_reserva = this.reservacionRepositorio.create(createReservacionInput);
     
@@ -98,7 +107,7 @@ if (habitacionCupo) {
   reservacion.fecha_final = pre_reserva.fecha_final;
   reservacion.num_huespedes = pre_reserva.num_huespedes;
   reservacion.habitacion_id = pre_reserva.habitacion_id;
-  reservacion.persona_id = pre_reserva.persona_id;
+  reservacion.persona_id = usuarioId; //pre_reserva.persona_id;
   reservacion.num_cuartos = number_cuartos + 1;//pre_reserva.num_cuartos; //SOn el total de cuartos asociados a la persona
   reservacion.monto = monto; //Es lo que costaría en total segun el precio de la habitacion y los dias de instancia periodo
   reservacion.periodo = periodo;
