@@ -1,14 +1,12 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
-import { Equal, LessThan, LessThanOrEqual, MoreThan, Repository } from 'typeorm';
+import { MoreThan, Repository } from 'typeorm';
 import { Reservacion } from './entities/reservacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { differenceInDays } from 'date-fns';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { HabitacionService } from 'src/habitacion/habitacion.service';
-import { TipoHabitacion } from 'src/tipo_habitacion/entities/tipo_habitacion.entity';
-import { format } from 'path';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 
@@ -92,7 +90,6 @@ if (habitacionCupo) {
     const habitacionNum = this.usuarioService.getReservaciones(pre_reserva.id)
     const number_cuartos = (await habitacionNum).length; 
 
-
   const reservacion = new Reservacion();
 
   reservacion.fecha_reserva = fecha_hoy;
@@ -139,5 +136,7 @@ if (habitacionCupo) {
   getUsuario(id: number): Promise<Usuario>{
     return this.usuarioService.findOne(id);
   }
+
+  
    
 }
