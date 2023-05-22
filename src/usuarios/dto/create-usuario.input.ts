@@ -24,4 +24,14 @@ export class CreateUsuarioInput {
   @IsNotEmpty()
   @Field((type)=> Int)
   tipo_usuario_id: number;
+  
+  //Datos de acceso
+  @Field()
+  correo: string;
+
+  @Field()
+  contrasenia: string;
+
+  @Field()
+  role_usuario: string;
 }

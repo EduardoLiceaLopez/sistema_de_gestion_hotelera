@@ -10,8 +10,9 @@ import { TipoUsuariosModule } from './tipo_usuarios/tipo_usuarios.module';
 import { TipoHabitacionModule } from './tipo_habitacion/tipo_habitacion.module';
 import { HabitacionModule } from './habitacion/habitacion.module';
 import { ReservacionModule } from './reservacion/reservacion.module';
-import { UserAccessModule } from './user_access/user_access.module';
 import { AuthModule } from './auth/auth.module';
+import { ReporteModule } from './reporte/reporte.module';
+import { GastosModule } from './gastos/gastos.module';
 
 
 
@@ -41,7 +42,8 @@ import { AuthModule } from './auth/auth.module';
   HabitacionModule,
   ReservacionModule,
   AuthModule,
-  UserAccessModule,
+  ReporteModule,
+  GastosModule,
 ],
   controllers: [AppController],
   providers: [AppService],

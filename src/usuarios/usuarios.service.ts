@@ -49,6 +49,10 @@ export class UsuariosService {
     }
   }
 
+  findOneByCorreo(correo: string): Promise<Usuario | undefined>{
+    return this.usuarioRepositorio.findOneBy({correo: correo});
+  };
+
   //Invoca el servicio del repositorio de tipo de usuario para conseguir sus datos
   getTipoUsuario(tipoUsr_id: number): Promise<TipoUsuario>{
     return this.tipoUsuarioServicio.findOne(tipoUsr_id)

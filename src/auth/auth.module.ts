@@ -4,15 +4,16 @@ import { AuthResolver } from './auth.resolver';
 import { LocalStrategy } from './local.strategy';
 
 import { PassportModule } from '@nestjs/passport';
-import { UserAccessModule } from 'src/user_access/user_access.module';
 import { JwtModule } from '@nestjs/jwt';
 import { JwtStrategy } from './jwt.strategy';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { UsuariosModule } from 'src/usuarios/usuarios.module';
 
 
 @Module({
   imports: [
     PassportModule, 
-    UserAccessModule,
+    UsuariosModule,
     JwtModule.register({
 
     signOptions: {expiresIn: '3600s'},

@@ -1,62 +1,64 @@
-import { Injectable, NotFoundException } from '@nestjs/common';
-import { UserAccess } from 'src/user_access/entities/user_access.entity';
-import { UserAccessService } from 'src/user_access/user_access.service';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { LoginUserInput } from './dto/login-user.input';
-import { CreateUserAccessInput } from 'src/user_access/dto/create-user_access.input';
 import * as bcrypt from 'bcrypt';
+import { UsuariosService } from 'src/usuarios/usuarios.service';
+import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { CreateUsuarioInput } from 'src/usuarios/dto/create-usuario.input';
 
 
 @Injectable()
 export class AuthService {
 
-    constructor(private userAccessService: UserAccessService,
+    constructor(
             private jwtService: JwtService,
+
+            private usuariosService: UsuariosService,
         ){}
 
-    async validateUserAccess(correo: string, contrasenia: string): Promise <any>{
+    async validateUser(correo: string, contrasenia: string): Promise <any>{
 
-        const userAccess = await this.userAccessService.findOne(correo);
+        const usuario = await this.usuariosService.findOneByCorreo(correo);
 
-        if(userAccess){
+        if(usuario){
             
-            const valid = await bcrypt.compare(contrasenia, userAccess?.contrasenia);
+            const valid = await bcrypt.compare(contrasenia, usuario?.contrasenia);
 
-            if(userAccess && valid){
-                const {contrasenia, ...result} = userAccess;
+            if(usuario && valid){
+                const {contrasenia, ...result} = usuario;
                 return result;
-    
             }
                 return null;
         } else{
-            throw new NotFoundException(`The user_name not exist`);
+            throw new NotFoundException(`El usario con el correo ${correo}`);
         }
 
 
     }
 
-    async login(userAccess: UserAccess){
+    async login(usuario: Usuario){
         return {
             access_token: this.jwtService.sign({
-                correo: userAccess.correo,
-                sub: userAccess.id,
-                role: userAccess.role_usuario,
+                correo: usuario.correo,
+                sub_id: usuario.id,
+                name: usuario.nombre,
+                role: usuario.role_usuario,
             }),
-            userAccess,
+            usuario,
         };
     }
 
-    async signup(signupUserInput: CreateUserAccessInput){
-        const userAccess = await this.userAccessService.findOne(signupUserInput.correo);
+    async signup(signupUserInput: CreateUsuarioInput){
+        const usuario = await this.usuariosService.findOneByCorreo(signupUserInput.correo);
 
-        if (userAccess){
+        if (usuario){
             
-            throw new Error('User Acces already exists!');
+            throw new ConflictException('Este usuario ya está registrado!');
         }
 
         const contrasenia = await bcrypt.hash(signupUserInput.contrasenia, 10);
         
-        return this.userAccessService.createUserAccess({
+        return this.usuariosService.create({
             ...signupUserInput,
             contrasenia,
         });

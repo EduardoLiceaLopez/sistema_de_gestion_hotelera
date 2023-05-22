@@ -37,6 +37,12 @@ export class UsuariosResolver {
     return this.usuariosServicio.findOne(id);
   }
 
+  
+  @Query((returns)=> Usuario, {name: 'usuario'})
+  usuarioBYCorreo(@Args('correo') correo: string){
+    return this.usuariosServicio.findOneByCorreo(correo);
+  }
+
   @ResolveField((returns)=> TipoUsuario)
   async tipoUsuario(@Parent() usuario: Usuario): Promise<TipoUsuario>{
     const tipoUsuario = await this.usuariosServicio.getTipoUsuario(usuario.tipo_usuario_id);

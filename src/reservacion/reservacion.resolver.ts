@@ -4,8 +4,9 @@ import { Reservacion } from './entities/reservacion.entity';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
 import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
-import { ConflictException } from '@nestjs/common';
+import { ConflictException, UseGuards } from '@nestjs/common';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
+import { AdminGuard } from 'src/roles/admin.guard';
 
 
 
@@ -18,6 +19,7 @@ export class ReservacionResolver {
     return this.reservacionService.create(createReservacionInput);
   }
 
+  @UseGuards(AdminGuard)
   @Query(() => [Reservacion], { name: 'reservaciones' })
   findAll() {
     return this.reservacionService.findAll();

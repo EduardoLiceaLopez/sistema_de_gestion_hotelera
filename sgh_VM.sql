@@ -16,9 +16,14 @@ CREATE TABLE usuarios(
 	fech_nacimiento DATE NOT NULL,
 	numTelefono VARCHAR(15) NOT NULL,
 	tipo_usuario_id INT NOT NULL,
+	correo VARCHAR(50) NOT NULL,
+	contrasenia VARCHAR(200) NOT NULL,
+	role_usuario VARCHAR(20) NOT NULL,
+
 
 	FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id)
 );
+
 
 CREATE TABLE cliente(
 	usuario_id INT PRIMARY KEY,
@@ -41,44 +46,6 @@ CREATE TABLE habitacion(
 
 );
 
-/*
-CREATE TABLE reservas(
-	id Int AUTO_INCREMENT NOT NULL,
-	num_huespedes Char(3) NOT NULL,
-	num_cuartos Char(3) NOT NULL,
-	fecha_reserva Date NOT NULL,
-    periodo Date NOT NULL,
-    monto Float NOT NULL,
-    habitacion_id Int NOT NULL,
-    cliente_id Int NOT NULL,
-	hora VARCHAR(50) NOT NULL,
-	fech_nacimiento DATE
-	PRIMARY KEY (id),
-	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
-    FOREIGN KEY (cliente_id) REFERENCES cliente(id)
-);
-*/
-
-/*
-
-CREATE TABLE reservas(
-	id Int AUTO_INCREMENT PRIMARY KEY,
-	num_huespedes varchar(3) NOT NULL,
-	num_cuartos varchar(3) NOT NULL,
-	fecha_reserva Date NOT NULL,
-    periodo INT NOT NULL,
-    monto Float NOT NULL,
-    habitacion_id Int NOT NULL,
-    persona_id Int NOT NULL,
-	fecha_inicio DATE NOT NULL,
-	fecha_final DATE NOT NULL,
-	hora_registro Varchar(10),
-	cantidad_habitaciones INT NOT NULL,
-	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id)
-);
-
-*/
-
 CREATE TABLE reservas(
 	id Int AUTO_INCREMENT PRIMARY KEY,
 	num_huespedes varchar(3) NOT NULL,
@@ -95,12 +62,11 @@ CREATE TABLE reservas(
 	FOREIGN KEY (persona_id) REFERENCES usuarios(id)
 );
 
-CREATE TABLE user_access(
-	id INT auto_increment PRIMARY KEY,
-	correo VARCHAR(50) NOT NULL,
-	contrasenia VARCHAR(200) NOT NULL,
-	usuario_id INT NOT NULL,
-	role_usuario VARCHAR(20) NOT NULL,
+CREATE TABLE gastos(
+	id INT PRIMARY KEY auto_increment,
+	monto FLOAT NOT NULL,
+	fecha DATE NOT NULL,
+	nombre VARCHAR(15) NOT NULL,
+	empleado VARCHAR(50)
 
-	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
