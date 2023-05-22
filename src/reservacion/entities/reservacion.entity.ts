@@ -67,8 +67,5 @@ export class Reservacion {
   @Field()
   hora_registro: string;
 
-  @Column()
-  @Field()
-  cantidad_habitaciones: number;
 
 }

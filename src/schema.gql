@@ -15,7 +15,6 @@ input CreateReservacionInput {
   cantidad_habitaciones: Int!
   fecha_final: DateTime!
   fecha_inicio: DateTime!
-  num_cuartos: Int!
 
   """Example field (placeholder)"""
   num_huespedes: Int!
@@ -159,7 +158,6 @@ input UpdateReservacionInput {
   fecha_final: DateTime
   fecha_inicio: DateTime
   id: Int!
-  num_cuartos: Int
 
   """Example field (placeholder)"""
   num_huespedes: Int

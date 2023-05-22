@@ -91,7 +91,6 @@ CREATE TABLE reservas(
 	fecha_inicio DATE NOT NULL,
 	fecha_final DATE NOT NULL,
 	hora_registro Varchar(10),
-	cantidad_habitaciones INT NOT NULL,
 	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
 	FOREIGN KEY (persona_id) REFERENCES usuarios(id)
 );

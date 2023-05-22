@@ -5,9 +5,7 @@ export class CreateReservacionInput {
   @Field(() => Int, { description: 'Example field (placeholder)' })
   num_huespedes: number;
 
-  //Por ahora lo dará el cliente
-  @Field(()=>Int)
-  num_cuartos: number
+
 
   @Field(()=>Date)
   fecha_inicio: Date;
@@ -26,8 +24,7 @@ export class CreateReservacionInput {
 
 
   //Por ahora lo dará el cliente
-  @Field(()=> Int)
-  cantidad_habitaciones: number;
+  
 
 }
 

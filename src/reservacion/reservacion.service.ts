@@ -83,7 +83,14 @@ if (habitacionCupo) {
 
     //Calcular el monto
     const habitacion = this.getHabitacion(pre_reserva.habitacion_id);
-    const monto = (await habitacion).precio;
+    const monto = (await habitacion).precio * periodo;
+
+
+
+    //calcular habitaciones
+
+    const habitacionNum = this.usuarioService.getReservaciones(pre_reserva.id)
+    const number_cuartos = (await habitacionNum).length; 
 
 
   const reservacion = new Reservacion();
@@ -93,11 +100,10 @@ if (habitacionCupo) {
   reservacion.fecha_inicio = pre_reserva.fecha_inicio;
   reservacion.fecha_final = pre_reserva.fecha_final;
   reservacion.num_huespedes = pre_reserva.num_huespedes;
-  reservacion.cantidad_habitaciones = pre_reserva.cantidad_habitaciones;
   reservacion.habitacion_id = pre_reserva.habitacion_id;
   reservacion.persona_id = pre_reserva.persona_id;
-  reservacion.num_cuartos = pre_reserva.num_cuartos;
-  reservacion.monto = monto;
+  reservacion.num_cuartos = number_cuartos + 1;//pre_reserva.num_cuartos; //SOn el total de cuartos asociados a la persona
+  reservacion.monto = monto; //Es lo que costaría en total segun el precio de la habitacion y los dias de instancia periodo
   reservacion.periodo = periodo;
   reservacion.id = pre_reserva.id;
 
