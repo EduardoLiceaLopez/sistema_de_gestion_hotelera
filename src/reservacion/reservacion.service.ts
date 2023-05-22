@@ -38,8 +38,6 @@ export class ReservacionService {
     const payload: any = this.jwtService.decode(token);
     const usuarioId = payload.id;
 
-    
-
     const pre_reserva = this.reservacionRepositorio.create(createReservacionInput);
     
     //Obtiene el dia

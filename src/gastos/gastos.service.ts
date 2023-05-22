@@ -1,9 +1,12 @@
-import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException, UseGuards } from '@nestjs/common';
 import { CreateGastoInput } from './dto/create-gasto.input';
 import { UpdateGastoInput } from './dto/update-gasto.input';
-import { Repository } from 'typeorm';
+import { QueryBuilder, Repository, getRepository } from 'typeorm';
 import { Gasto } from './entities/gasto.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { JwtService } from '@nestjs/jwt';
+import { Context } from '@nestjs/graphql';
+import { TrabajadorGuard } from 'src/roles/user.guard';
 
 @Injectable()
 export class GastosService {
@@ -12,18 +15,31 @@ export class GastosService {
 
     @InjectRepository(Gasto)
     private gastosRepository: Repository<Gasto>,
+    private jwtService: JwtService,
   ){
     
   }
 
 
-  async create(createGastoInput: CreateGastoInput) {
+  @UseGuards(TrabajadorGuard)
+  async create(createGastoInput: CreateGastoInput, @Context() context) {
     const existGasto = await this.gastosRepository.findOneBy({nombre: createGastoInput.nombre});
 
     if (existGasto){
+
       throw new ConflictException('Este gasto ya ha sido registrado');
 
     }else{
+
+      
+      const token = context.req.headers.authorization.replace('Bearer ', '');
+      const payload: any = this.jwtService.decode(token);
+      const usuarioId = payload.id;
+      const nombreUser = payload.nombre;
+      const apPaterno = payload.apPaterno;
+      const apMaterno = payload.apMaterno;
+
+
       const pre_gasto = this.gastosRepository.create(createGastoInput);
 
       const fecha_hoy = new Date();
@@ -31,7 +47,8 @@ export class GastosService {
 
 
       const gasto = new Gasto()
-      gasto.empleado = 'empleado x'
+      gasto.empleado_id = usuarioId;
+      gasto.nombre_empleado = nombreUser + " " + apPaterno + " " + apMaterno
       gasto.id = pre_gasto.id;
       gasto.monto = pre_gasto.monto;
       gasto.fecha = fecha_hoy;
@@ -85,4 +102,5 @@ export class GastosService {
   remove(id: number) {
     return `This action removes a #${id} gasto`;
   }
+
 }

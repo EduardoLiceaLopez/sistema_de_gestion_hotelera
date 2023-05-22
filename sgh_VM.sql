@@ -67,6 +67,6 @@ CREATE TABLE gastos(
 	monto FLOAT NOT NULL,
 	fecha DATE NOT NULL,
 	nombre VARCHAR(15) NOT NULL,
-	empleado VARCHAR(50)
-
+	empleado_id VARCHAR(50) NOT NULL,
+	nombre_empleado VARCHAR(100) NOT NULL
 );

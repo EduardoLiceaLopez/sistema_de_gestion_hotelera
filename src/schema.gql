@@ -3,8 +3,6 @@
 # ------------------------------------------------------
 
 input CreateGastoInput {
-  empleadi: String!
-  fecha: DateTime!
   monto: Float!
   nombre: String!
 }
@@ -32,7 +30,6 @@ input CreateReservacionInput {
 }
 
 input CreateTipoHabitacionInput {
-  id: Int!
   tipo: String!
 }
 
@@ -58,13 +55,14 @@ A date-time string at UTC, such as 2019-12-03T09:54:33Z, compliant with the date
 scalar DateTime
 
 type Gasto {
-  empleado: String!
+  empleado_id: Float!
   fecha: DateTime!
 
   """Example field (placeholder)"""
   id: Int!
   monto: Float!
   nombre: String!
+  nombre_empleado: String!
 }
 
 type Habitacion {
@@ -170,8 +168,6 @@ type TipoUsuario {
 }
 
 input UpdateGastoInput {
-  empleadi: String
-  fecha: DateTime
   id: Int!
   monto: Float
   nombre: String
