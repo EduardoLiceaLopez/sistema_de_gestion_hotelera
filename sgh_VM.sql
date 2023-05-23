@@ -2,11 +2,6 @@ CREATE DATABASE sgh_VM;
 
 USE sgh_VM;
 
-CREATE TABLE tipo_usuarios(
-	id INT PRIMARY KEY auto_increment,
-	nombre VARCHAR(50) NOT NULL
-
-);
 
 CREATE TABLE usuarios(
 	id INT PRIMARY KEY auto_increment,

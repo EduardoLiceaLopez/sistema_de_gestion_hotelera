@@ -3,7 +3,6 @@ import { UsuariosService } from './usuarios.service';
 import { Usuario } from './entities/usuario.entity';
 import { CreateUsuarioInput } from './dto/create-usuario.input';
 import { UpdateUsuarioInput } from './dto/update-usuario.input';
-import { TipoUsuario } from '../tipo_usuarios/entities/tipo_usuario.entity';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
 import { AdminGuard } from 'src/roles/admin.guard';
 import { UseGuards } from '@nestjs/common';
@@ -57,6 +56,7 @@ export class UsuariosResolver {
     return this.usuariosServicio.findOneByCorreo(correo);
   }
 
+  /*
   @ResolveField((returns)=> TipoUsuario)
   async tipoUsuario(@Parent() usuario: Usuario): Promise<TipoUsuario>{
     const tipoUsuario = await this.usuariosServicio.getTipoUsuario(usuario.tipo_usuario_id);
@@ -75,8 +75,10 @@ export class UsuariosResolver {
       }
     } 
 
+    
 
   }
+  */
   //Fin de READ
 
   //UPDATE en CRUD
