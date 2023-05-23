@@ -33,10 +33,6 @@ export class Usuario {
    @Column()
    @Field((type) => String)
    numTelefono: string;
- 
-   @Column()
-   @Field()
-   tipo_usuario_id: number;
 
    //Aqui es donde se hará el enlace con la otra entidad (tabla)
    //En este caso la tabla tipo_usuario

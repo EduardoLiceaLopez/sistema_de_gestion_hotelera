@@ -12,10 +12,8 @@ CREATE TABLE usuarios(
 	numTelefono VARCHAR(15) NOT NULL,
 	correo VARCHAR(50) NOT NULL,
 	contrasenia VARCHAR(200) NOT NULL,
-	role_usuario VARCHAR(20) NOT NULL,
+	role_usuario VARCHAR(20) NOT NULL
 
-
-	FOREIGN KEY (tipo_usuario_id) REFERENCES tipo_usuarios(id)
 );
 
 
@@ -28,8 +26,6 @@ CREATE TABLE tipo_habitacion(
 	id Int AUTO_INCREMENT PRIMARY KEY auto_increment,
 	tipo Varchar(50) NOT NULL
 );
-
-INSERT INTO tipos_habitacion (tipo) VALUES ('Estandar');
 
 
 CREATE TABLE habitacion(
