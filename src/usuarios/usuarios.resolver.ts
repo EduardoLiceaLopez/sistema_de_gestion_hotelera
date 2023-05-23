@@ -3,7 +3,6 @@ import { UsuariosService } from './usuarios.service';
 import { Usuario } from './entities/usuario.entity';
 import { CreateUsuarioInput } from './dto/create-usuario.input';
 import { UpdateUsuarioInput } from './dto/update-usuario.input';
-import { TipoUsuario } from '../tipo_usuarios/entities/tipo_usuario.entity';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
 
 @Resolver(() => Usuario)
@@ -41,27 +40,6 @@ export class UsuariosResolver {
   @Query((returns)=> Usuario, {name: 'usuario'})
   usuarioBYCorreo(@Args('correo') correo: string){
     return this.usuariosServicio.findOneByCorreo(correo);
-  }
-
-  @ResolveField((returns)=> TipoUsuario)
-  async tipoUsuario(@Parent() usuario: Usuario): Promise<TipoUsuario>{
-    const tipoUsuario = await this.usuariosServicio.getTipoUsuario(usuario.tipo_usuario_id);
-
-    //Esta comprobacion se hace para que en caso de que no haya un tipo de usuario
-    //Se devuelva una alternativa de respuesta y no solo null
-    if (tipoUsuario){
-
-      return tipoUsuario;
-
-    } else {
-      return{
-        id: parseInt('0', 10),
-        nombre: 'No hay un tipo de usuario asociado a este usuario',
-        usuarios: [],
-      }
-    } 
-
-
   }
   //Fin de READ
 
