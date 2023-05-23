@@ -21,9 +21,6 @@ export class CreateUsuarioInput {
   @Field()
   numTelefono: string;
 
-  @IsNotEmpty()
-  @Field((type)=> Int)
-  tipo_usuario_id: number;
   
   //Datos de acceso
   @Field()

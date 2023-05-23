@@ -10,7 +10,6 @@ CREATE TABLE usuarios(
 	apMaterno VARCHAR(50) NOT NULL,
 	fech_nacimiento DATE NOT NULL,
 	numTelefono VARCHAR(15) NOT NULL,
-	tipo_usuario_id INT NOT NULL,
 	correo VARCHAR(50) NOT NULL,
 	contrasenia VARCHAR(200) NOT NULL,
 	role_usuario VARCHAR(20) NOT NULL,
