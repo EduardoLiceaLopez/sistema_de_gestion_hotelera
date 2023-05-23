@@ -35,6 +35,9 @@ CREATE TABLE tipo_habitacion(
 	tipo Varchar(50) NOT NULL
 );
 
+INSERT INTO tipos_habitacion (tipo) VALUES ('Estandar');
+
+
 CREATE TABLE habitacion(
 	id Int auto_increment PRIMARY KEY,
 	estado Varchar(50) NULL,
@@ -58,6 +61,7 @@ CREATE TABLE reservas(
 	fecha_inicio DATE NOT NULL,
 	fecha_final DATE NOT NULL,
 	hora_registro Varchar(10),
+	nombre_cliente VARCHAR(70),
 	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
 	FOREIGN KEY (persona_id) REFERENCES usuarios(id)
 );

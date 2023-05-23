@@ -7,6 +7,7 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Context } from '@nestjs/graphql';
 import { TrabajadorGuard } from 'src/roles/trabajador.guard';
+import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
 
 
 @Injectable()
@@ -61,17 +62,19 @@ export class GastosService {
 
   }
 
+  @UseGuards(TrabajadorAdminGuard)
   async findAll() {
     return this.gastosRepository.find();
   }
 
+  @UseGuards(TrabajadorAdminGuard)
   async totalGastos(): Promise<number> {
     const gastos = await this.gastosRepository.find();
     const total = gastos.reduce((accumulator, gasto) => accumulator + gasto.monto, 0);
     return total;
   }
   
-
+  @UseGuards(TrabajadorAdminGuard)
   async findOne(nombre: string) {
     const gasto = await this.gastosRepository.findOneBy({nombre: nombre});
 
@@ -82,7 +85,7 @@ export class GastosService {
     }
   }
 
-
+  @UseGuards(TrabajadorAdminGuard)
   async findOneById(id: number) {
     const gasto = await this.gastosRepository.findOneBy({id: id});
 
@@ -93,6 +96,7 @@ export class GastosService {
     }
   }
 
+  @UseGuards(TrabajadorAdminGuard)
   async update(id: number, updateGastoInput: UpdateGastoInput) {
     const gasto = await this.findOneById(id);
 
@@ -107,6 +111,7 @@ export class GastosService {
   }
 
   //Pendiente
+  @UseGuards(TrabajadorAdminGuard)
   async remove(id: number): Promise<Boolean> {
     const gasto = await this.gastosRepository.findOne({
       where: {id}

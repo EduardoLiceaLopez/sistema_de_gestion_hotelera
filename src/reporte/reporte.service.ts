@@ -1,4 +1,4 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, UseGuards } from '@nestjs/common';
 import { CreateReporteInput } from './dto/create-reporte.input';
 import { UpdateReporteInput } from './dto/update-reporte.input';
 import { Reporte } from './entities/reporte.entity';
@@ -10,6 +10,8 @@ import { ReservacionService } from 'src/reservacion/reservacion.service';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { Context } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
+import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
+import { TrabajadorGuard } from 'src/roles/trabajador.guard';
 
 @Injectable()
 export class ReporteService {
@@ -32,7 +34,7 @@ export class ReporteService {
   }
 
 
-
+@UseGuards(TrabajadorGuard)
   async create(@Context() context) {
 
     const token = context.req.headers.authorization.replace('Bearer ', '');
@@ -77,8 +79,9 @@ export class ReporteService {
 
   }
 
+  @UseGuards(TrabajadorAdminGuard)
   findAll() {
-    return `This action returns all reporte`;
+    return this.reporteRepository.find();
   }
 
   findOne(id: number) {

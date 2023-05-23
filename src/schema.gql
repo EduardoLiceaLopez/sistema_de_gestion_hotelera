@@ -24,6 +24,15 @@ input CreateReservacionInput {
   num_huespedes: Int!
 }
 
+input CreateReservacionRecepcionistaInput {
+  fecha_final: DateTime!
+  fecha_inicio: DateTime!
+  nombre_cliente: String!
+
+  """Example field (placeholder)"""
+  num_huespedes: Int!
+}
+
 input CreateTipoHabitacionInput {
   tipo: String!
 }
@@ -95,6 +104,7 @@ type Mutation {
   createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
   createReporte: Reporte!
   createReservacion(createReservacionInput: CreateReservacionInput!): Reservacion!
+  createReservacionRecepcion(createReservacionRecepcionInput: CreateReservacionRecepcionistaInput!): Reservacion!
   createTipoHabitacion(createTipoHabitacionInput: CreateTipoHabitacionInput!): TipoHabitacion!
   removeGasto(id: Int!): Gasto!
   removeHabitacion(id: Int!): Habitacion!
@@ -150,6 +160,7 @@ type Reservacion {
   """Example field (placeholder)"""
   id: Int!
   monto: Float!
+  nombre_cliente: String
   num_cuartos: Float!
   num_huespedes: Float!
   periodo: Float!
