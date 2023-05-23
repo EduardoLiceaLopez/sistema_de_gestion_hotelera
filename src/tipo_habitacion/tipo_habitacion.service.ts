@@ -4,6 +4,7 @@ import { UpdateTipoHabitacionInput } from './dto/update-tipo_habitacion.input';
 import { Repository } from 'typeorm';
 import { TipoHabitacion } from './entities/tipo_habitacion.entity';
 import { InjectRepository } from '@nestjs/typeorm';
+import { promises } from 'dns';
 
 @Injectable()
 export class TipoHabitacionService {
@@ -19,13 +20,21 @@ export class TipoHabitacionService {
     return this.tipoHabitacionRepository.save(tipoHabitacion);
   }
 
-  findAll() {
+  findAll(): Promise<TipoHabitacion[]> {
     return this.tipoHabitacionRepository.find();
   }
 
-  findOne(id: number) {
-    
-    return this.tipoHabitacionRepository.findOneBy({id: id});
+  async findOne(id: number): Promise<TipoHabitacion> {
+    const tipoHabitacion = await this.tipoHabitacionRepository.findOne({
+      where:{
+        id,
+      }
+    })
+    if(tipoHabitacion){
+      return tipoHabitacion;
+    } else{
+      throw new NotFoundException('Tipo Habitacion con el ID ${id} no fue econtrado o no existe');
+    }
   }
 
   async update(id: number, updateTipoHabitacionInput: UpdateTipoHabitacionInput): Promise<TipoHabitacion> {

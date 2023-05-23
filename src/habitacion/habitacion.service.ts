@@ -27,26 +27,28 @@ export class HabitacionService {
 
   //READ
 
-  //Muestra todos los usuarios
+  //Muestra habitaciones
   findAll(): Promise<Habitacion[]> {
     return this.habitacionRepositorio.find();
   }
 
-  //Muestra solo uno (según el id dado) de los usuarios
+  //Muestra solo uno (según el id dado) de los habitaciones
   async findOne(id: number): Promise<Habitacion> {
-    const usuario = await this.habitacionRepositorio.findOneBy({id: id})
-
-    if(usuario){
-      return usuario;
+    const habitacion = await this.habitacionRepositorio.findOne({
+      where:{
+        id,
+      }
+    })
+    if(habitacion){
+      return habitacion;
     } else{
-      throw new NotFoundException(`La habitación  ${id} no fue econtrada o no existe`);
+      throw new NotFoundException(`La Habitación con el ID ${id} no fue econtrada o no existe`);
     }
   }
 
-  //Invoca el servicio del repositorio de tipo de usuario para conseguir sus datos
+  //Invoca el servicio del repositorio de tipo de habitacion para conseguir sus datos
   getTipoHabitacion(tipo_habitacion_id: number): Promise<TipoHabitacion>{
     return this.tipoHabitacionServicio.findOne(tipo_habitacion_id);
-
   };
 
   //Fin READ
