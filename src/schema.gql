@@ -127,6 +127,7 @@ type Query {
   tipoHabitaciones: [TipoHabitacion!]!
   tipoUsuario(id: Float!): TipoUsuario!
   tipoUsuarios: [TipoUsuario!]!
+  totalGastos: Float!
   usuario(correo: String!): Usuario!
   usuarios: [Usuario!]!
 }

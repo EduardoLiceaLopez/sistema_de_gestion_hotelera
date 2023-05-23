@@ -8,6 +8,7 @@ import { JwtService } from '@nestjs/jwt';
 import { Context } from '@nestjs/graphql';
 import { TrabajadorGuard } from 'src/roles/user.guard';
 
+
 @Injectable()
 export class GastosService {
    
@@ -60,9 +61,16 @@ export class GastosService {
 
   }
 
-  findAll() {
+  async findAll() {
     return this.gastosRepository.find();
   }
+
+  async totalGastos(): Promise<number> {
+    const gastos = await this.gastosRepository.find();
+    const total = gastos.reduce((accumulator, gasto) => accumulator + gasto.monto, 0);
+    return total;
+  }
+  
 
   async findOne(nombre: string) {
     const gasto = await this.gastosRepository.findOneBy({nombre: nombre});
@@ -99,8 +107,21 @@ export class GastosService {
   }
 
   //Pendiente
-  remove(id: number) {
-    return `This action removes a #${id} gasto`;
+  async remove(id: number): Promise<Boolean> {
+    const gasto = await this.gastosRepository.findOne({
+      where: {id}
+    })
+
+    if (gasto){
+      const resultado = await this.gastosRepository.delete(id);
+      
+      if (resultado.affected !==0){
+        return true;
+      }
+    } else {
+      throw new NotFoundException(`El gasto con el ID ${id} no fue econtrado o no existe`);
+    }
+
   }
 
 }

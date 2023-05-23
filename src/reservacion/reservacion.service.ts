@@ -1,4 +1,4 @@
-import { ConflictException, Injectable } from '@nestjs/common';
+import { ConflictException, Injectable, NotFoundException } from '@nestjs/common';
 import { CreateReservacionInput } from './dto/create-reservacion.input';
 import { UpdateReservacionInput } from './dto/update-reservacion.input';
 import { MoreThan, Repository } from 'typeorm';
@@ -76,8 +76,8 @@ if (!habitacionCupo) {
 }
 
 if (habitacionCupo) {
-  habitacionCupo.estado = 'ocupada';
-  await this.habitacionRepository.update(habitacionCupo.id, { estado: 'ocupada' });
+  habitacionCupo.estado = 'reservada';
+  await this.habitacionRepository.update(habitacionCupo.id, { estado: 'reservada' });
   pre_reserva.habitacion_id = habitacionCupo.id;
 } else {
   throw new ConflictException('No hay habitaciones disponibles para el número de huéspedes especificado.');
@@ -131,10 +131,21 @@ if (habitacionCupo) {
     return `This action updates a #${id} reservacion`;
   }
 
-  remove(id: number) {
-    return `This action removes a #${id} reservacion`;
-  }
+  async remove(id: number): Promise<Boolean> {
+    const reserva = await this.reservacionRepositorio.findOne({
+      where: {id}
+    })
 
+    if (reserva){
+      const resultado = await this.reservacionRepositorio.delete(id);
+      
+      if (resultado.affected !==0){
+        return true;
+      }
+    } else {
+      throw new NotFoundException(`Reservacion con el ID ${id} no fue econtrada no existe`);
+    }
+  }
   
   getHabitacion(id: number): Promise<Habitacion>{
     return this.habitacionService.findOne(id) ;
@@ -144,6 +155,17 @@ if (habitacionCupo) {
     return this.usuarioService.findOne(id);
   }
 
+  //Esto lo hará Recepcionista
+  async confirmarReserva(id: number, updateReservacionInput: UpdateReservacionInput){
+
+    const reservacion = await this.reservacionRepositorio.findOneBy({id: id});
+
+    if (reservacion){
+      await this.habitacionRepository.update(updateReservacionInput.id, { estado: 'ocupada' });
+    }else{
+      throw new NotFoundException('No hay reservas con este id');
+    }
+  }
   
    
 }

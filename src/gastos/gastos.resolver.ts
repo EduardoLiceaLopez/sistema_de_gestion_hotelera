@@ -20,6 +20,11 @@ export class GastosResolver {
     return this.gastosService.findAll();
   }
 
+  @Query(() => Float, { name: 'totalGastos' })
+  totalGastos() {
+    return this.gastosService.totalGastos();
+  }
+
   @Query(() => Gasto, { name: 'gasto' })
   findOneByNombre(@Args('nombre', { type: () => Int }) nombre: string) {
     return this.gastosService.findOne(nombre);
