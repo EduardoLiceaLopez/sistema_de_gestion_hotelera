@@ -5,7 +5,7 @@ import { GqlExecutionContext } from "@nestjs/graphql";
 
 
 @Injectable()
-export class TrabajadorAdminGuard implements CanActivate {
+export class TrabajadorClienteGuard implements CanActivate {
   canActivate(context: ExecutionContext): boolean | Promise<boolean> | Observable<boolean> {
     const ctx = GqlExecutionContext.create(context);
     const token = ctx.getContext().req.headers.authorization?.split(' ')[1];

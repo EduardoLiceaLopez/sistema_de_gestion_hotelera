@@ -11,6 +11,7 @@ import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { Context } from '@nestjs/graphql';
 import { JwtService } from '@nestjs/jwt';
+import { ClienteGuard } from 'src/roles/cliente.guard';
 
 @Injectable()
 export class ReservacionService {
@@ -30,6 +31,7 @@ export class ReservacionService {
   ){
 
   }
+
 
 
   async create(createReservacionInput: CreateReservacionInput,  @Context() context) {
@@ -166,6 +168,14 @@ if (habitacionCupo) {
       throw new NotFoundException('No hay reservas con este id');
     }
   }
+
+  async totalGananciasReservas(): Promise<number> {
+    const reserva = await this.reservacionRepositorio.find();
+    const total = reserva.reduce((accumulator, reservacion) => accumulator + reservacion.monto, 0);
+    return total;
+  }
+
+
   
    
 }

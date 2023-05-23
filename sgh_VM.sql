@@ -70,3 +70,14 @@ CREATE TABLE gastos(
 	empleado_id VARCHAR(50) NOT NULL,
 	nombre_empleado VARCHAR(100) NOT NULL
 );
+
+CREATE TABLE reporte(
+	id INT auto_increment PRIMARY KEY,
+	total_gastos INT NOT NULL,
+	total_reservas INT NOT NULL,
+	total_ingresos_reservas INT NOT NULL,
+	total_usuarios INT NOT NULL,
+	fecha Date NOT NULL,
+	nombre_autor VARCHAR(75) NOT NULL,
+	hora_reporte VARCHAR(40) NOT NULL
+);

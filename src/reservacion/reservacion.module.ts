@@ -12,6 +12,6 @@ import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [TypeOrmModule.forFeature([Reservacion, Habitacion, Usuario]), HabitacionModule, UsuariosModule],
   providers: [ReservacionResolver, ReservacionService, JwtService],
-  exports: [],
+  exports: [ReservacionService],
 })
 export class ReservacionModule {}

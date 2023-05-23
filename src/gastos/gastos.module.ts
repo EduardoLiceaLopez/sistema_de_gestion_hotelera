@@ -8,5 +8,6 @@ import { JwtService } from '@nestjs/jwt';
 @Module({
   imports: [TypeOrmModule.forFeature([Gasto])],
   providers: [GastosResolver, GastosService, JwtService],
+  exports: [GastosService]
 })
 export class GastosModule {}

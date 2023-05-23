@@ -7,12 +7,13 @@ import { TipoUsuariosModule } from '../tipo_usuarios/tipo_usuarios.module';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
 import { AdminGuard } from 'src/roles/admin.guard';
 import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
-import { TrabajadorGuard } from 'src/roles/user.guard';
+import { TrabajadorGuard } from 'src/roles/trabajador.guard';
 import { ClienteGuard } from 'src/roles/cliente.guard';
+import { JwtService } from '@nestjs/jwt';
 
 @Module({
   imports: [TypeOrmModule.forFeature([Usuario, Reservacion]), TipoUsuariosModule],
-  providers: [UsuariosResolver, UsuariosService, AdminGuard, TrabajadorAdminGuard, TrabajadorGuard, ClienteGuard],
+  providers: [UsuariosResolver, UsuariosService, AdminGuard, TrabajadorAdminGuard, TrabajadorGuard, ClienteGuard, JwtService],
   exports: [UsuariosService]
 })
 export class UsuariosModule {

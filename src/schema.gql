@@ -16,11 +16,6 @@ input CreateHabitacionInput {
   ubicacion: String!
 }
 
-input CreateReporteInput {
-  """Example field (placeholder)"""
-  exampleField: Int!
-}
-
 input CreateReservacionInput {
   fecha_final: DateTime!
   fecha_inicio: DateTime!
@@ -93,12 +88,12 @@ type Mutation {
   actualizarTipoUsuario(updateTipoUsuarioInput: UpdateTipoUsuarioInput!): TipoUsuario!
   actualizarUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
   borrarTipoUsuario(id: Float!): String!
-  borrarUsuario(id: Float!): String!
+  borrarUsuario: String!
   crearTipoUsuario(tipoUsuarioInput: CreateTipoUsuarioInput!): TipoUsuario!
   crearUsuario(usuarioInput: CreateUsuarioInput!): Usuario!
   createGasto(createGastoInput: CreateGastoInput!): Gasto!
   createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
-  createReporte(createReporteInput: CreateReporteInput!): Reporte!
+  createReporte: Reporte!
   createReservacion(createReservacionInput: CreateReservacionInput!): Reservacion!
   createTipoHabitacion(createTipoHabitacionInput: CreateTipoHabitacionInput!): TipoHabitacion!
   removeGasto(id: Int!): Gasto!
@@ -128,14 +123,20 @@ type Query {
   tipoUsuario(id: Float!): TipoUsuario!
   tipoUsuarios: [TipoUsuario!]!
   totalGastos: Float!
-  usuario(correo: String!): Usuario!
+  usuario: Usuario!
+  usuarioCorreo(correo: String!): Usuario!
   usuarios: [Usuario!]!
 }
 
 type Reporte {
-  gasto_id: Int!
+  fecha: DateTime!
+  hora_reporte: String!
   id: Int!
-  reserva_id: Int!
+  nombre_autor: String!
+  total_gastos: Float!
+  total_ingresos_reservas: Float!
+  total_reservas: Int!
+  total_usuarios: Float!
 }
 
 type Reservacion {
@@ -184,8 +185,6 @@ input UpdateHabitacionInput {
 }
 
 input UpdateReporteInput {
-  """Example field (placeholder)"""
-  exampleField: Int
   id: Int!
 }
 
@@ -214,7 +213,6 @@ input UpdateUsuarioInput {
   contrasenia: String
   correo: String
   fech_nacimiento: String
-  id: Int!
   nombre: String
   numTelefono: String
   role_usuario: String

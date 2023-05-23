@@ -6,7 +6,7 @@ import { Gasto } from './entities/gasto.entity';
 import { InjectRepository } from '@nestjs/typeorm';
 import { JwtService } from '@nestjs/jwt';
 import { Context } from '@nestjs/graphql';
-import { TrabajadorGuard } from 'src/roles/user.guard';
+import { TrabajadorGuard } from 'src/roles/trabajador.guard';
 
 
 @Injectable()

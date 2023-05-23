@@ -7,6 +7,8 @@ import { Habitacion } from 'src/habitacion/entities/habitacion.entity';
 import { ConflictException, UseGuards } from '@nestjs/common';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { AdminGuard } from 'src/roles/admin.guard';
+import { ClienteGuard } from 'src/roles/cliente.guard';
+import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
 
 
 
@@ -14,12 +16,13 @@ import { AdminGuard } from 'src/roles/admin.guard';
 export class ReservacionResolver {
   constructor(private readonly reservacionService: ReservacionService) {}
 
+  @UseGuards(ClienteGuard)
   @Mutation(() => Reservacion)
   createReservacion(@Args('createReservacionInput') createReservacionInput: CreateReservacionInput, @Context() context) {
     return this.reservacionService.create(createReservacionInput, context);
   }
 
-  @UseGuards(AdminGuard)
+  @UseGuards(TrabajadorAdminGuard)
   @Query(() => [Reservacion], { name: 'reservaciones' })
   findAll() {
     return this.reservacionService.findAll();
