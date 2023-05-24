@@ -37,10 +37,6 @@ input CreateTipoHabitacionInput {
   tipo: String!
 }
 
-input CreateTipoUsuarioInput {
-  nombre: String!
-}
-
 input CreateUsuarioInput {
   apMaterno: String
   apPaterno: String!
@@ -49,8 +45,7 @@ input CreateUsuarioInput {
   fech_nacimiento: String!
   nombre: String!
   numTelefono: String!
-  role_usuario: String!
-  tipo_usuario_id: Int!
+  role_usuario: String! = "cliente"
 }
 
 """
@@ -94,11 +89,8 @@ input LoginUserInput {
 }
 
 type Mutation {
-  actualizarTipoUsuario(updateTipoUsuarioInput: UpdateTipoUsuarioInput!): TipoUsuario!
   actualizarUsuario(updateUsuarioInput: UpdateUsuarioInput!): Usuario!
-  borrarTipoUsuario(id: Float!): String!
   borrarUsuario: String!
-  crearTipoUsuario(tipoUsuarioInput: CreateTipoUsuarioInput!): TipoUsuario!
   crearUsuario(usuarioInput: CreateUsuarioInput!): Usuario!
   createGasto(createGastoInput: CreateGastoInput!): Gasto!
   createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
@@ -130,8 +122,6 @@ type Query {
   reservaciones: [Reservacion!]!
   tipoHabitacion(id: Int!): TipoHabitacion!
   tipoHabitaciones: [TipoHabitacion!]!
-  tipoUsuario(id: Float!): TipoUsuario!
-  tipoUsuarios: [TipoUsuario!]!
   totalGastos: Float!
   usuario: Usuario!
   usuarioCorreo(correo: String!): Usuario!
@@ -174,12 +164,6 @@ type TipoHabitacion {
   tipo: String!
 }
 
-type TipoUsuario {
-  id: Int!
-  nombre: String!
-  usuarios: [Usuario!]
-}
-
 input UpdateGastoInput {
   id: Int!
   monto: Float
@@ -213,11 +197,6 @@ input UpdateTipoHabitacionInput {
   tipo: String
 }
 
-input UpdateTipoUsuarioInput {
-  id: Int!
-  nombre: String
-}
-
 input UpdateUsuarioInput {
   apMaterno: String
   apPaterno: String
@@ -226,8 +205,7 @@ input UpdateUsuarioInput {
   fech_nacimiento: String
   nombre: String
   numTelefono: String
-  role_usuario: String
-  tipo_usuario_id: Int
+  role_usuario: String = "cliente"
 }
 
 type Usuario {
@@ -242,7 +220,4 @@ type Usuario {
   reservacion: [Reservacion!]
   reservaciones: [Reservacion!]!
   role_usuario: String!
-  tipoUsuario: TipoUsuario!
-  tipo_usuario: TipoUsuario @deprecated(reason: "Este campo ha cambiado su valor")
-  tipo_usuario_id: Float!
 }

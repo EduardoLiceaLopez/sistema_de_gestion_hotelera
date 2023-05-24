@@ -12,7 +12,7 @@ CREATE TABLE usuarios(
 	numTelefono VARCHAR(15) NOT NULL,
 	correo VARCHAR(50) NOT NULL,
 	contrasenia VARCHAR(200) NOT NULL,
-	role_usuario VARCHAR(20) NOT NULL
+	role_usuario VARCHAR(20) NOT NULL DEFAULT 'cliente'
 
 );
 
