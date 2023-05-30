@@ -101,7 +101,7 @@ type Mutation {
   removeGasto(id: Int!): Gasto!
   removeHabitacion(id: Int!): Habitacion!
   removeReporte(id: Int!): Reporte!
-  removeReservacion(id: Int!): Reservacion!
+  removeReservacion(id: Int!): Boolean!
   removeTipoHabitacion(id: Int!): TipoHabitacion!
   signup(signupUserInput: CreateUsuarioInput!): Usuario!
   updateGasto(updateGastoInput: UpdateGastoInput!): Gasto!
