@@ -46,7 +46,12 @@ export class UsuariosService {
   }
 
   findOneByCorreo(correo: string): Promise<Usuario | undefined>{
-    return this.usuarioRepositorio.findOneBy({correo: correo});
+     const usuario_correo = this.usuarioRepositorio.findOneBy({correo: correo});
+
+     if(!usuario_correo){
+      throw new NotFoundException('No se encontró un usuario con ese correo');
+     }
+     return usuario_correo;
   };
 
   //Invoca el servicio del repositorio de tipo de usuario para conseguir sus datos
