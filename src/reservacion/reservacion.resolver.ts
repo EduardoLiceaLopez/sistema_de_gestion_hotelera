@@ -49,7 +49,7 @@ export class ReservacionResolver {
   }
 
   
-  @Mutation(() => Reservacion)
+  @Mutation(() => Boolean)
   removeReservacion(@Args('id', { type: () => Int }) id: number) {
     return this.reservacionService.remove(id);
   }
