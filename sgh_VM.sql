@@ -1,6 +1,6 @@
-CREATE DATABASE sgh_VM;
+CREATE DATABASE sgh_Hilton;
 
-USE sgh_VM;
+USE sgh_Hilton;
 
 
 CREATE TABLE usuarios(
@@ -10,21 +10,15 @@ CREATE TABLE usuarios(
 	apMaterno VARCHAR(50) NOT NULL,
 	fech_nacimiento DATE NOT NULL,
 	numTelefono VARCHAR(15) NOT NULL
-	tipo_usuario_id INT NOT NULL,
-	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-);
-
-CREATE TABLE tipo_usuario(
-	id INT PRIMARY KEY auto_increment,
-	tipo VARCHAR(50) NOT NULL
 );
 
 CREATE TABLE usuarios_acceso(
 	usuario_id INT PRIMARY KEY,
-	user_name VARCHAR(50) NOT NULL,
+	nombre_usuario VARCHAR(50) NOT NULL,
 	contrasenia VARCHAR(200) NOT NULL,
-	usuario_id FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
-)
+	role varchar(30),
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
+);
 
 
 CREATE TABLE cliente(
@@ -57,12 +51,12 @@ CREATE TABLE reservas(
     periodo INT NOT NULL,
     monto FLOAT NOT NULL,
     habitacion_id Int NOT NULL,
-    cliente_id Int NOT NULL,
+    usuario_id Int NOT NULL,
 	fecha_inicio DATE NOT NULL,
 	fecha_final DATE NOT NULL,
 	hora_registro Varchar(10),
 	FOREIGN KEY (habitacion_id) REFERENCES habitacion(id),
-	FOREIGN KEY (cliente_id) REFERENCES cliente(id)
+	FOREIGN KEY (usuario_id) REFERENCES usuarios(id)
 );
 
 CREATE TABLE gastos(

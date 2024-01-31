@@ -8,27 +8,29 @@ import { GqlAuthGuard } from './gql-auth.guard';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { CreateUsuarioInput } from 'src/usuarios/dto/create-usuario.input';
+import { UsuariosAccesoService } from 'src/usuarios_acceso/usuarios_acceso.service';
+import { CreateUsuariosAccesoInput } from 'src/usuarios_acceso/dto/create-usuarios_acceso.input';
+import { UsuariosAcceso } from 'src/usuarios_acceso/entities/usuarios_acceso.entity';
 
 @Resolver()
 export class AuthResolver {
 
     constructor(private authService: AuthService,
                 
-                private usuarioService: UsuariosService,
+                private usuariosAccesoService: UsuariosAccesoService,
                 ){}
 
-    @UseGuards(GqlAuthGuard)
+    //@UseGuards(GqlAuthGuard)
     @Query(()=> LoginResponse, {nullable: true})
-    async login(@Args('loginUserInput') loginUserInput: LoginUserInput): Promise<LoginResponse>{
+    async login(@Args('loginUserAccessInput') loginUserAccessInput: LoginUserInput): Promise<LoginResponse>{
 
-        const usuario = await this.usuarioService.findOneByCorreo(loginUserInput.correo);
+        const usuarioAcces = await this.usuariosAccesoService.findOneByNombreUsuario(loginUserAccessInput.nombre_usuario);
 
-        return this.authService.login(usuario);
+        return this.authService.login(usuarioAcces);
     }
     
-
-    @Mutation(()=> Usuario)
-    signup(@Args('signupUserInput') signupUserInput: CreateUsuarioInput){
+    @Mutation(()=> UsuariosAcceso, {name: 'usuarioAccesoCreate'})
+    signup(@Args('signupUserInput') signupUserInput: CreateUsuariosAccesoInput){
         return this.authService.signup(signupUserInput)
     }
 

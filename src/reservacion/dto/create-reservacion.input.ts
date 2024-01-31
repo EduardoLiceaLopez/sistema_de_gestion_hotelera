@@ -12,5 +12,8 @@ export class CreateReservacionInput {
   @Field(()=> Date)
   fecha_final: Date;
 
+  @Field(()=> Int)
+  usuario_id: number;
+
 }
 

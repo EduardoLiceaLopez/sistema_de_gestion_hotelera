@@ -47,11 +47,11 @@ export class Reservacion {
 
   @Column()
   @Field()
-  persona_id: number;
+  usuario_id: number;
 
 
   @ManyToOne(()=> Usuario, (usuario)=> usuario.reservacion)
-  @JoinColumn({name: 'persona_id'})
+  @JoinColumn({name: 'usuario_id'})
   @Field(()=> Usuario, {nullable: true})
   usuario: Usuario;
 
@@ -67,9 +67,9 @@ export class Reservacion {
   @Field()
   hora_registro: string;
 
-  @Column()
-  @Field(()=> String, {nullable: true})
-  nombre_cliente: string;
+  // @Column()
+  // @Field(()=> String, {nullable: true})
+  // nombre_cliente: string;
 
 
 }

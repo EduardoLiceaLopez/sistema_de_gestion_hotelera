@@ -12,6 +12,7 @@ import { ReservacionModule } from './reservacion/reservacion.module';
 import { AuthModule } from './auth/auth.module';
 import { ReporteModule } from './reporte/reporte.module';
 import { GastosModule } from './gastos/gastos.module';
+import { UsuariosAccesoModule } from './usuarios_acceso/usuarios_acceso.module';
 
 
 
@@ -26,7 +27,7 @@ import { GastosModule } from './gastos/gastos.module';
   }),
   TypeOrmModule.forRoot({
     type: 'mysql',
-    database: 'sgh_VM',
+    database: 'sgh_Hilton',
     host: 'localhost',
     port: 3306,
     username: 'root',
@@ -42,6 +43,7 @@ import { GastosModule } from './gastos/gastos.module';
   AuthModule,
   ReporteModule,
   GastosModule,
+  UsuariosAccesoModule,
 ],
   controllers: [AppController],
   providers: [AppService],

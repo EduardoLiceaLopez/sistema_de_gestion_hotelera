@@ -23,14 +23,14 @@ export class CreateUsuarioInput {
 
   
   //Datos de acceso
-  @Field()
-  correo: string;
+  // @Field()
+  // correo: string;
 
-  @Field()
-  contrasenia: string;
+  // @Field()
+  // contrasenia: string;
 
-  @IsOptional()
-  @Field()
-  role_usuario: string = 'cliente';
+  // @IsOptional()
+  // @Field()
+  // role_usuario: string = 'cliente';
   
 }

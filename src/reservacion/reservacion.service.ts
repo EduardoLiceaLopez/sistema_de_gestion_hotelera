@@ -109,12 +109,11 @@ if (habitacionCupo) {
   reservacion.fecha_final = pre_reserva.fecha_final;
   reservacion.num_huespedes = pre_reserva.num_huespedes;
   reservacion.habitacion_id = pre_reserva.habitacion_id;
-  reservacion.persona_id = usuarioId; //pre_reserva.persona_id;
+  reservacion.usuario_id = pre_reserva.usuario_id//usuarioId; //pre_reserva.persona_id;
   reservacion.num_cuartos = number_cuartos + 1;//pre_reserva.num_cuartos; //SOn el total de cuartos asociados a la persona
   reservacion.monto = monto; //Es lo que costaría en total segun el precio de la habitacion y los dias de instancia periodo
   reservacion.periodo = periodo;
   reservacion.id = pre_reserva.id;
-  reservacion.nombre_cliente = null;
 
   //Espera para asi obtener el id
  const reservaDOne = await this.reservacionRepositorio.save(reservacion);
@@ -124,94 +123,94 @@ if (habitacionCupo) {
 
   
    
-    async createRecepcion(createReservacionRecepcionistaInput: CreateReservacionRecepcionistaInput,  @Context() context) {
+//     async createRecepcion(createReservacionRecepcionistaInput: CreateReservacionRecepcionistaInput,  @Context() context) {
 
-    const token = context.req.headers.authorization.replace('Bearer ', '');
-    const payload: any = this.jwtService.decode(token);
-    const usuarioId = payload.id;
+//     const token = context.req.headers.authorization.replace('Bearer ', '');
+//     const payload: any = this.jwtService.decode(token);
+//     const usuarioId = payload.id;
 
-    const pre_reserva = this.reservacionRepositorio.create(createReservacionRecepcionistaInput);
+//     const pre_reserva = this.reservacionRepositorio.create(createReservacionRecepcionistaInput);
     
-    //Obtiene el dia
-    const fecha_hoy = new Date();
-    fecha_hoy.setHours(0,0,0,0);
+//     //Obtiene el dia
+//     const fecha_hoy = new Date();
+//     fecha_hoy.setHours(0,0,0,0);
 
-    //Obtiene la hora
-    const hora = new Date();
-    const hora_actual = `${hora.getHours()}:${hora.getMinutes()}:${hora.getSeconds()}`;
+//     //Obtiene la hora
+//     const hora = new Date();
+//     const hora_actual = `${hora.getHours()}:${hora.getMinutes()}:${hora.getSeconds()}`;
 
 
-    //Para valor absoluto Math.abs
-    //Retorna en entero y en días la diferencia de fechas
-    const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
+//     //Para valor absoluto Math.abs
+//     //Retorna en entero y en días la diferencia de fechas
+//     const periodo =  Math.abs(differenceInDays(pre_reserva.fecha_inicio, pre_reserva.fecha_final));
 
-        //Asignar habitacion
+//         //Asignar habitacion
 
-        // Asignar habitacion
-const num_huespedes = pre_reserva.num_huespedes;
+//         // Asignar habitacion
+// const num_huespedes = pre_reserva.num_huespedes;
 
-let habitacionCupo = await this.habitacionRepository.findOne({
-  where: {
-    capacidad: num_huespedes,
-    estado: 'libre'
-  }
-});
+// let habitacionCupo = await this.habitacionRepository.findOne({
+//   where: {
+//     capacidad: num_huespedes,
+//     estado: 'libre'
+//   }
+// });
 
-if (!habitacionCupo) {
-  habitacionCupo = await this.habitacionRepository.findOne({
-    where: {
-      capacidad: MoreThan(num_huespedes),
-      estado: 'libre'
-    }
-  });
+// if (!habitacionCupo) {
+//   habitacionCupo = await this.habitacionRepository.findOne({
+//     where: {
+//       capacidad: MoreThan(num_huespedes),
+//       estado: 'libre'
+//     }
+//   });
 
-}
+// }
 
-if (habitacionCupo) {
-  habitacionCupo.estado = 'reservada';
-  await this.habitacionRepository.update(habitacionCupo.id, { estado: 'reservada' });
-  pre_reserva.habitacion_id = habitacionCupo.id;
-} else {
-  throw new ConflictException('No hay habitaciones disponibles para el número de huéspedes especificado.');
-}
+// if (habitacionCupo) {
+//   habitacionCupo.estado = 'reservada';
+//   await this.habitacionRepository.update(habitacionCupo.id, { estado: 'reservada' });
+//   pre_reserva.habitacion_id = habitacionCupo.id;
+// } else {
+//   throw new ConflictException('No hay habitaciones disponibles para el número de huéspedes especificado.');
+// }
 
         
 
 
-    //Calcular el monto
-    const habitacion = this.getHabitacion(pre_reserva.habitacion_id);
-    const monto = (await habitacion).precio * periodo;
+//     //Calcular el monto
+//     const habitacion = this.getHabitacion(pre_reserva.habitacion_id);
+//     const monto = (await habitacion).precio * periodo;
 
 
 
-    //calcular habitaciones
+//     //calcular habitaciones
 
-    const habitacionNum = this.usuarioService.getReservaciones(pre_reserva.id)
-    const number_cuartos = (await habitacionNum).length; 
+//     const habitacionNum = this.usuarioService.getReservaciones(pre_reserva.id)
+//     const number_cuartos = (await habitacionNum).length; 
 
-  const reservacion = new Reservacion();
+//   const reservacion = new Reservacion();
 
-  reservacion.fecha_reserva = fecha_hoy;
-  reservacion.hora_registro = hora_actual;
-  reservacion.fecha_inicio = pre_reserva.fecha_inicio;
-  reservacion.fecha_final = pre_reserva.fecha_final;
-  reservacion.num_huespedes = pre_reserva.num_huespedes;
-  reservacion.habitacion_id = pre_reserva.habitacion_id;
-  reservacion.persona_id = usuarioId; //pre_reserva.persona_id;
-  reservacion.num_cuartos = number_cuartos + 1;//pre_reserva.num_cuartos; //SOn el total de cuartos asociados a la persona
-  reservacion.monto = monto; //Es lo que costaría en total segun el precio de la habitacion y los dias de instancia periodo
-  reservacion.periodo = periodo;
-  reservacion.id = pre_reserva.id;
-  reservacion.nombre_cliente = pre_reserva.nombre_cliente;
+//   reservacion.fecha_reserva = fecha_hoy;
+//   reservacion.hora_registro = hora_actual;
+//   reservacion.fecha_inicio = pre_reserva.fecha_inicio;
+//   reservacion.fecha_final = pre_reserva.fecha_final;
+//   reservacion.num_huespedes = pre_reserva.num_huespedes;
+//   reservacion.habitacion_id = pre_reserva.habitacion_id;
+//   reservacion.usuario_id = usuarioId; //pre_reserva.persona_id;
+//   reservacion.num_cuartos = number_cuartos + 1;//pre_reserva.num_cuartos; //SOn el total de cuartos asociados a la persona
+//   reservacion.monto = monto; //Es lo que costaría en total segun el precio de la habitacion y los dias de instancia periodo
+//   reservacion.periodo = periodo;
+//   reservacion.id = pre_reserva.id;
+//   reservacion.nombre_cliente = pre_reserva.nombre_cliente;
 
-  //Espera para asi obtener el id
- const reservaDOne = await this.reservacionRepositorio.save(reservacion);
-
-
-  return reservaDOne;
+//   //Espera para asi obtener el id
+//  const reservaDOne = await this.reservacionRepositorio.save(reservacion);
 
 
-  }
+//   return reservaDOne;
+
+
+//   }
    
 
   findAll() {

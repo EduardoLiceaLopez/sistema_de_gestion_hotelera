@@ -20,7 +20,7 @@ export class Habitacion{
   @Field(()=>TipoHabitacion, {nullable: true})
   tipo_habitacion?: TipoHabitacion;
 
-
+//ocupada, libre, reservada
   @Column()
   @Field(()=>String)
   estado: string;

@@ -5,6 +5,9 @@ import * as bcrypt from 'bcrypt';
 import { UsuariosService } from 'src/usuarios/usuarios.service';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { CreateUsuarioInput } from 'src/usuarios/dto/create-usuario.input';
+import { UsuariosAccesoService } from 'src/usuarios_acceso/usuarios_acceso.service';
+import { UsuariosAcceso } from 'src/usuarios_acceso/entities/usuarios_acceso.entity';
+import { CreateUsuariosAccesoInput } from 'src/usuarios_acceso/dto/create-usuarios_acceso.input';
 
 
 @Injectable()
@@ -13,12 +16,12 @@ export class AuthService {
     constructor(
             private jwtService: JwtService,
 
-            private usuariosService: UsuariosService,
+            private usuariosAccesoService: UsuariosAccesoService,
         ){}
 
-    async validateUser(correo: string, contrasenia: string): Promise <any>{
+    async validateUser(nombre_usuario: string, contrasenia: string): Promise <any>{
 
-        const usuario = await this.usuariosService.findOneByCorreo(correo);
+        const usuario = await this.usuariosAccesoService.findOneByNombreUsuario(nombre_usuario);
 
         if(usuario){
             
@@ -30,38 +33,35 @@ export class AuthService {
             }
                 return null;
         } else{
-            throw new NotFoundException(`El usario con el correo ${correo}`);
+            throw new NotFoundException(`El usario con el usuario ${nombre_usuario}`);
         }
 
 
     }
 
-    async login(usuario: Usuario){
+    async login(usuarioAcceso: UsuariosAcceso){
         return {
             access_token: this.jwtService.sign({
-                correo: usuario.correo,
-                id: usuario.id,
-                nombre: usuario.nombre,
-                apPaterno: usuario.apPaterno,
-                apMaterno: usuario.apMaterno,
-                role: usuario.role_usuario,
+                nombre_usuario: usuarioAcceso.nombre_usuario,
+                user_id: usuarioAcceso.usuario_id,
+                role: usuarioAcceso.role
             }),
-            usuario,
+            usuarioAcceso,
         };
     }
 
-    async signup(signupUserInput: CreateUsuarioInput){
-        const usuario = await this.usuariosService.findOneByCorreo(signupUserInput.correo);
+    async signup(signupUserAccessInput: CreateUsuariosAccesoInput){
+        const usuarioAcceso = await this.usuariosAccesoService.findOneByNombreUsuario(signupUserAccessInput.nombre_usuario);
 
-        if (usuario){
+        if (usuarioAcceso){
             
             throw new ConflictException('Este usuario ya está registrado!');
         }
 
-        const contrasenia = await bcrypt.hash(signupUserInput.contrasenia, 10);
+        const contrasenia = await bcrypt.hash(signupUserAccessInput.contrasenia, 10);
         
-        return this.usuariosService.create({
-            ...signupUserInput,
+        return this.usuariosAccesoService.create({
+            ...signupUserAccessInput,
             contrasenia,
         });
     }

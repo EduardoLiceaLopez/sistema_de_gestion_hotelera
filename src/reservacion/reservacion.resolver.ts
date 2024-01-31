@@ -18,17 +18,17 @@ import { TrabajadorGuard } from 'src/roles/trabajador.guard';
 export class ReservacionResolver {
   constructor(private readonly reservacionService: ReservacionService) {}
 
-  @UseGuards(ClienteGuard)
+  @UseGuards(TrabajadorGuard)
   @Mutation(() => Reservacion)
   createReservacion(@Args('createReservacionInput') createReservacionInput: CreateReservacionInput, @Context() context) {
     return this.reservacionService.create(createReservacionInput, context);
   }
 
-  @UseGuards(TrabajadorGuard)
-  @Mutation(() => Reservacion)
-  createReservacionRecepcion(@Args('createReservacionRecepcionInput') createReservacioRecepcionistanInput: CreateReservacionRecepcionistaInput, @Context() context) {
-    return this.reservacionService.create(createReservacioRecepcionistanInput, context);
-  }
+  // @UseGuards(TrabajadorGuard)
+  // @Mutation(() => Reservacion)
+  // createReservacionRecepcion(@Args('createReservacionRecepcionInput') createReservacioRecepcionistanInput: CreateReservacionRecepcionistaInput, @Context() context) {
+  //   return this.reservacionService.create(createReservacioRecepcionistanInput, context);
+  // }
 
   @UseGuards(TrabajadorAdminGuard)
   @Query(() => [Reservacion], { name: 'reservaciones' })
@@ -70,7 +70,7 @@ export class ReservacionResolver {
   //Usuarios
   @ResolveField((returns)=> Usuario)
   async usuario(@Parent() reservacion: Reservacion): Promise<Usuario>{
-    const usuario = await this.reservacionService.getUsuario(reservacion.persona_id)
+    const usuario = await this.reservacionService.getUsuario(reservacion.usuario_id)
 
     if (usuario){
       return usuario;

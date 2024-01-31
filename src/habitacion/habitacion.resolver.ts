@@ -29,7 +29,7 @@ export class HabitacionResolver {
   }
   
   @ResolveField((returns)=> TipoHabitacion)
-  async tipohabitacion(@Parent() habitacion: Habitacion): Promise<TipoHabitacion>{
+  async tipo_habitacion(@Parent() habitacion: Habitacion): Promise<TipoHabitacion>{
     const tipoHab = await this.habitacionService.getTipoHabitacion(habitacion.tipo_habitacion_id);
 
     //Esta comprobacion se hace para que en caso de que no haya un tipo de usuario

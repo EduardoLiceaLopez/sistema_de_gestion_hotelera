@@ -9,6 +9,7 @@ import { UseGuards } from '@nestjs/common';
 import { TrabajadorClienteGuard } from 'src/roles/cliente-trabajador';
 import { ClienteGuard } from 'src/roles/cliente.guard';
 import { JwtService } from '@nestjs/jwt';
+import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
 
 @Resolver(() => Usuario)
 export class UsuariosResolver {
@@ -33,7 +34,7 @@ export class UsuariosResolver {
    * READ en CRUD
    */
 
-  @UseGuards(AdminGuard)
+  @UseGuards(TrabajadorAdminGuard)
   @Query((returns)=> [Usuario], {name: 'usuarios'})
   usuarios(){
     return this.usuariosServicio.findAll();
@@ -51,10 +52,10 @@ export class UsuariosResolver {
   }
 
   
-  @Query((returns)=> Usuario, {name: 'usuarioCorreo'})
-  usuarioBYCorreo(@Args('correo') correo: string){
-    return this.usuariosServicio.findOneByCorreo(correo);
-  }
+  // @Query((returns)=> Usuario, {name: 'usuarioCorreo'})
+  // usuarioBYCorreo(@Args('correo') correo: string){
+  //   return this.usuariosServicio.findOneByCorreo(correo);
+  // }
 
   /*
   @ResolveField((returns)=> TipoUsuario)
@@ -84,7 +85,7 @@ export class UsuariosResolver {
   //UPDATE en CRUD
   //Args es un decorador que indica a GraphQl que argumentos espera
   //para el servicio
-  @UseGuards(ClienteGuard)
+  @UseGuards(TrabajadorAdminGuard)
   @Mutation(()=> Usuario, {name: 'actualizarUsuario'})
   update(@Args('updateUsuarioInput') updateUsuarioInput: UpdateUsuarioInput, @Context() context){
     

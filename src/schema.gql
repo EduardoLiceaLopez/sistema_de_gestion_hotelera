@@ -22,15 +22,7 @@ input CreateReservacionInput {
 
   """Example field (placeholder)"""
   num_huespedes: Int!
-}
-
-input CreateReservacionRecepcionistaInput {
-  fecha_final: DateTime!
-  fecha_inicio: DateTime!
-  nombre_cliente: String!
-
-  """Example field (placeholder)"""
-  num_huespedes: Int!
+  usuario_id: Int!
 }
 
 input CreateTipoHabitacionInput {
@@ -40,12 +32,16 @@ input CreateTipoHabitacionInput {
 input CreateUsuarioInput {
   apMaterno: String
   apPaterno: String!
-  contrasenia: String!
-  correo: String!
   fech_nacimiento: String!
   nombre: String!
   numTelefono: String!
-  role_usuario: String! = "cliente"
+}
+
+input CreateUsuariosAccesoInput {
+  contrasenia: String!
+  nombre_usuario: String!
+  role: String!
+  usuario_id: Int!
 }
 
 """
@@ -74,18 +70,17 @@ type Habitacion {
   reservacion: [Reservacion!]
   tipo_habitacion: TipoHabitacion
   tipo_habitacion_id: Int!
-  tipohabitacion: TipoHabitacion!
   ubicacion: String!
 }
 
 type LoginResponse {
   access_token: String!
-  usuario: Usuario!
+  usuarioAcceso: UsuariosAcceso!
 }
 
 input LoginUserInput {
   contrasenia: String!
-  correo: String!
+  nombre_usuario: String!
 }
 
 type Mutation {
@@ -96,19 +91,20 @@ type Mutation {
   createHabitacion(createHabitacionInput: CreateHabitacionInput!): Habitacion!
   createReporte: Reporte!
   createReservacion(createReservacionInput: CreateReservacionInput!): Reservacion!
-  createReservacionRecepcion(createReservacionRecepcionInput: CreateReservacionRecepcionistaInput!): Reservacion!
   createTipoHabitacion(createTipoHabitacionInput: CreateTipoHabitacionInput!): TipoHabitacion!
   removeGasto(id: Int!): Gasto!
   removeHabitacion(id: Int!): Habitacion!
   removeReporte(id: Int!): Reporte!
   removeReservacion(id: Int!): Boolean!
   removeTipoHabitacion(id: Int!): TipoHabitacion!
-  signup(signupUserInput: CreateUsuarioInput!): Usuario!
   updateGasto(updateGastoInput: UpdateGastoInput!): Gasto!
   updateHabitacion(updateHabitacionInput: UpdateHabitacionInput!): Habitacion!
   updateReporte(updateReporteInput: UpdateReporteInput!): Reporte!
   updateReservacion(updateReservacionInput: UpdateReservacionInput!): Reservacion!
   updateTipoHabitacion(updateTipoHabitacionInput: UpdateTipoHabitacionInput!): TipoHabitacion!
+  usuarioAccesoCreate(createUsuariosAccesoInput: CreateUsuariosAccesoInput!): UsuariosAcceso!
+  usuarioAccesoDelete(id: Int!): UsuariosAcceso!
+  usuarioAccesoUpdate(updateUsuariosAccesoInput: UpdateUsuariosAccesoInput!): UsuariosAcceso!
 }
 
 type Query {
@@ -116,7 +112,7 @@ type Query {
   gastos: [Gasto!]!
   habitacion(id: Int!): Habitacion!
   habitaciones: [Habitacion!]!
-  login(loginUserInput: LoginUserInput!): LoginResponse
+  login(loginUserAccessInput: LoginUserInput!): LoginResponse
   reporte(id: Int!): Reporte!
   reservacion(id: Int!): Reservacion!
   reservaciones: [Reservacion!]!
@@ -124,8 +120,9 @@ type Query {
   tipoHabitaciones: [TipoHabitacion!]!
   totalGastos: Float!
   usuario: Usuario!
-  usuarioCorreo(correo: String!): Usuario!
+  usuarioAccesoRead(id: Int!): UsuariosAcceso!
   usuarios: [Usuario!]!
+  usuariosAccesoRead: [UsuariosAcceso!]!
 }
 
 type Reporte {
@@ -150,12 +147,11 @@ type Reservacion {
   """Example field (placeholder)"""
   id: Int!
   monto: Float!
-  nombre_cliente: String
   num_cuartos: Float!
   num_huespedes: Float!
   periodo: Float!
-  persona_id: Float!
   usuario: Usuario
+  usuario_id: Float!
 }
 
 type TipoHabitacion {
@@ -190,6 +186,7 @@ input UpdateReservacionInput {
 
   """Example field (placeholder)"""
   num_huespedes: Int
+  usuario_id: Int
 }
 
 input UpdateTipoHabitacionInput {
@@ -200,24 +197,34 @@ input UpdateTipoHabitacionInput {
 input UpdateUsuarioInput {
   apMaterno: String
   apPaterno: String
-  contrasenia: String
-  correo: String
   fech_nacimiento: String
   nombre: String
   numTelefono: String
-  role_usuario: String = "cliente"
+}
+
+input UpdateUsuariosAccesoInput {
+  contrasenia: String
+  nombre_usuario: String
+  role: String
+  usuario_id: Int!
 }
 
 type Usuario {
   apMaterno: String
   apPaterno: String!
-  contrasenia: String!
-  correo: String!
   fech_nacimiento: String!
   id: Float!
   nombre: String!
   numTelefono: String!
   reservacion: [Reservacion!]
   reservaciones: [Reservacion!]!
-  role_usuario: String!
+  usuario_accesso: [UsuariosAcceso!]!
+}
+
+type UsuariosAcceso {
+  contrasenia: String!
+  nombre_usuario: String!
+  role: String!
+  usuario: Usuario
+  usuario_id: Int!
 }

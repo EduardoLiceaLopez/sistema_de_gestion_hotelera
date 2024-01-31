@@ -1,6 +1,7 @@
 import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
+import { UsuariosAcceso } from 'src/usuarios_acceso/entities/usuarios_acceso.entity';
 
 
 
@@ -38,16 +39,9 @@ export class Usuario {
   @Field(()=> [Reservacion], {nullable: true})
   reservacion: Reservacion[];
 
-  @Column()
-  @Field((type) => String)
-  correo: string;
 
-  @Column()
-  @Field((type) => String)
-  contrasenia: string;
-
-  @Column({ default: 'cliente' })
-  @Field(()=> String)
-  role_usuario: string;
+  @OneToMany(()=> UsuariosAcceso, (userioAcceso) => userioAcceso.usuario,{cascade: true})
+  @Field(()=> [UsuariosAcceso])
+  usuario_accesso: UsuariosAcceso[];
 
 }
