@@ -12,7 +12,7 @@ import { TrabajadorAdminGuard } from 'src/roles/trabajador-admin.guard';
 export class HabitacionResolver {
   constructor(private readonly habitacionService: HabitacionService) {}
 
-  @UseGuards(AdminGuard)
+  //@UseGuards(AdminGuard)
   @Mutation(() => Habitacion)
   createHabitacion(@Args('createHabitacionInput') createHabitacionInput: CreateHabitacionInput) {
     return this.habitacionService.create(createHabitacionInput);
@@ -20,6 +20,16 @@ export class HabitacionResolver {
   @Query(() => [Habitacion], { name: 'habitaciones' })
   findAll() {
     return this.habitacionService.findAll();
+  }
+
+  @Query(() => [Habitacion], { name: 'verDisponibilidad' })
+  findDisponiblidad() {
+    return this.habitacionService.findDisponibilidad();
+  }
+
+  @Query(() => [Habitacion], { name: 'HabitacionesSegunCapacidad' })
+  findDisponiblidadNumeroPersonas(@Args('num_huespedes', { type: () => Int }) num_huespedes: number) {
+    return this.habitacionService.findDisponiblesPorCapacidad(num_huespedes);
   }
 
   @UseGuards(TrabajadorAdminGuard)

@@ -24,20 +24,25 @@ export class AuthService {
         const usuario = await this.usuariosAccesoService.findOneByNombreUsuario(nombre_usuario);
 
         if(usuario){
-            
+            console.log(usuario.contrasenia)
+
             const valid = await bcrypt.compare(contrasenia, usuario?.contrasenia);
 
             if(usuario && valid){
                 const {contrasenia, ...result} = usuario;
+
+                console.log("Aqui que onda")
                 return result;
+                
             }
                 return null;
         } else{
-            throw new NotFoundException(`El usario con el usuario ${nombre_usuario}`);
+            throw new NotFoundException(`El usuario con el nombre de usuario ${nombre_usuario} no existe`);
         }
-
-
     }
+////
+
+    /////
 
     async login(usuarioAcceso: UsuariosAcceso){
         return {

@@ -30,10 +30,15 @@ export class ReservacionResolver {
   //   return this.reservacionService.create(createReservacioRecepcionistanInput, context);
   // }
 
-  @UseGuards(TrabajadorAdminGuard)
+  //@UseGuards(TrabajadorAdminGuard)
   @Query(() => [Reservacion], { name: 'reservaciones' })
   findAll() {
     return this.reservacionService.findAll();
+  }
+
+  @Query(() => [Reservacion], { name: 'habitacionesPorFecha' })
+  findFechas(@Args('fecha_hoy', { type: () => Date }) fecha_hoy: Date) {
+    return this.reservacionService.findFecha(fecha_hoy);
   }
 
 

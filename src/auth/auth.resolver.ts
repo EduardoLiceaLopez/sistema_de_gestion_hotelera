@@ -20,16 +20,16 @@ export class AuthResolver {
                 private usuariosAccesoService: UsuariosAccesoService,
                 ){}
 
-    //@UseGuards(GqlAuthGuard)
+    @UseGuards(GqlAuthGuard)
     @Query(()=> LoginResponse, {nullable: true})
-    async login(@Args('loginUserAccessInput') loginUserAccessInput: LoginUserInput): Promise<LoginResponse>{
+    async login(@Args('loginUserInput') loginUserInput: LoginUserInput): Promise<LoginResponse>{
 
-        const usuarioAcces = await this.usuariosAccesoService.findOneByNombreUsuario(loginUserAccessInput.nombre_usuario);
+        const usuarioAcces = await this.usuariosAccesoService.findOneByNombreUsuario(loginUserInput.nombre_usuario);
 
         return this.authService.login(usuarioAcces);
     }
     
-    @Mutation(()=> UsuariosAcceso, {name: 'usuarioAccesoCreate'})
+    @Mutation(()=> UsuariosAcceso, {name: 'signUp'})
     signup(@Args('signupUserInput') signupUserInput: CreateUsuariosAccesoInput){
         return this.authService.signup(signupUserInput)
     }

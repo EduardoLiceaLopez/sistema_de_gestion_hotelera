@@ -9,10 +9,13 @@ import { JwtStrategy } from './jwt.strategy';
 import { Usuario } from 'src/usuarios/entities/usuario.entity';
 import { UsuariosModule } from 'src/usuarios/usuarios.module';
 import { UsuariosAccesoModule } from 'src/usuarios_acceso/usuarios_acceso.module';
+import { TypeOrmModule } from '@nestjs/typeorm';
+import { UsuariosAcceso } from 'src/usuarios_acceso/entities/usuarios_acceso.entity';
 
 
 @Module({
   imports: [
+    TypeOrmModule.forFeature([Usuario, UsuariosAcceso]),
     PassportModule, 
     UsuariosModule, UsuariosAccesoModule,
     JwtModule.register({

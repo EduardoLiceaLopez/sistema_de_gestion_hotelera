@@ -3,7 +3,7 @@ import { CreateHabitacionInput } from './dto/create-habitacion.input';
 import { UpdateHabitacionInput } from './dto/update-habitacion.input';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Habitacion } from './entities/habitacion.entity';
-import { Repository } from 'typeorm';
+import { MoreThanOrEqual, Repository } from 'typeorm';
 import { TipoHabitacion } from '../tipo_habitacion/entities/tipo_habitacion.entity';
 import { TipoHabitacionService } from '../tipo_habitacion/tipo_habitacion.service';
 
@@ -32,6 +32,19 @@ export class HabitacionService {
     return this.habitacionRepositorio.find();
   }
 
+  //Muestra las habitaciones con disponibilidad
+  findDisponibilidad(): Promise<Habitacion[]> {
+    return this.habitacionRepositorio.find({where:{
+      estado: "libre"
+    }});
+  }
+
+  findDisponiblesPorCapacidad(num_huespedes: number): Promise<Habitacion[]> {
+    return this.habitacionRepositorio.find({where:{
+      estado: "libre",
+      capacidad: MoreThanOrEqual(num_huespedes),
+    }});
+  }
   //Muestra solo uno (según el id dado) de los usuarios
   async findOne(id: number): Promise<Habitacion> {
     const usuario = await this.habitacionRepositorio.findOneBy({id: id})

@@ -19,8 +19,8 @@ export class UsuariosService {
   ){};
 
   //CREATE
-  create(usuario: CreateUsuarioInput): Promise<Usuario>{
-    const newUsuario = this.usuarioRepositorio.create(usuario)
+  create(createUsuarioInput: CreateUsuarioInput): Promise<Usuario>{
+    const newUsuario = this.usuarioRepositorio.create(createUsuarioInput)
     return this.usuarioRepositorio.save(newUsuario);
   }
 

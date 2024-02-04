@@ -2,6 +2,7 @@ import { ObjectType, Field, Int } from '@nestjs/graphql';
 import { Column, Entity, JoinColumn, ManyToMany, ManyToOne, OneToMany, OneToOne, PrimaryGeneratedColumn } from 'typeorm';
 import { Reservacion } from 'src/reservacion/entities/reservacion.entity';
 import { UsuariosAcceso } from 'src/usuarios_acceso/entities/usuarios_acceso.entity';
+import { IsPhoneNumber } from "class-validator";
 
 
 
@@ -30,9 +31,10 @@ export class Usuario {
    @Column()
    @Field((type) => String)
    fech_nacimiento: string;
- 
+   
+
    @Column()
-   @Field((type) => String)
+   @Field()
    numTelefono: string;
    
     @OneToMany(()=> Reservacion, (reservacion) => reservacion.usuario, {cascade: true, nullable: true})

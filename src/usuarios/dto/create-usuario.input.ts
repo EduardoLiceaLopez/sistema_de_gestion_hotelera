@@ -1,23 +1,25 @@
 import { InputType, Int, Field } from '@nestjs/graphql';
-import { IsNotEmpty, IsOptional } from 'class-validator';
+import { IsEmail, IsInt, IsMobilePhone, IsNotEmpty, IsPhoneNumber, MaxLength, MinLength } from "class-validator";
 
 
 
 @InputType()
 export class CreateUsuarioInput {
 
+  @MinLength(9, {message: 'La contraseña debe tener más de 8 caracteres'})
   @Field()
   nombre: string;
 
   @Field()
   apPaterno: string;
-  
+
   @Field({nullable: true})
   apMaterno?: string;
 
   @Field()
   fech_nacimiento: string;
-
+  
+  @IsMobilePhone()
   @Field()
   numTelefono: string;
 

@@ -97,6 +97,7 @@ type Mutation {
   removeReporte(id: Int!): Reporte!
   removeReservacion(id: Int!): Boolean!
   removeTipoHabitacion(id: Int!): TipoHabitacion!
+  signUp(signupUserInput: CreateUsuariosAccesoInput!): UsuariosAcceso!
   updateGasto(updateGastoInput: UpdateGastoInput!): Gasto!
   updateHabitacion(updateHabitacionInput: UpdateHabitacionInput!): Habitacion!
   updateReporte(updateReporteInput: UpdateReporteInput!): Reporte!
@@ -108,11 +109,13 @@ type Mutation {
 }
 
 type Query {
+  HabitacionesSegunCapacidad(num_huespedes: Int!): [Habitacion!]!
   gasto(id: Int!): Gasto!
   gastos: [Gasto!]!
   habitacion(id: Int!): Habitacion!
   habitaciones: [Habitacion!]!
-  login(loginUserAccessInput: LoginUserInput!): LoginResponse
+  habitacionesPorFecha(fecha_hoy: DateTime!): [Reservacion!]!
+  login(loginUserInput: LoginUserInput!): LoginResponse
   reporte(id: Int!): Reporte!
   reservacion(id: Int!): Reservacion!
   reservaciones: [Reservacion!]!
@@ -123,6 +126,7 @@ type Query {
   usuarioAccesoRead(id: Int!): UsuariosAcceso!
   usuarios: [Usuario!]!
   usuariosAccesoRead: [UsuariosAcceso!]!
+  verDisponibilidad: [Habitacion!]!
 }
 
 type Reporte {

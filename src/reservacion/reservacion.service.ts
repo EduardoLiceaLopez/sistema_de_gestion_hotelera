@@ -269,6 +269,17 @@ if (habitacionCupo) {
     return total;
   }
 
+  findFecha(fecha_hoy: Date){
+
+    return this.reservacionRepositorio.find({
+      where:{
+        fecha_final: MoreThan(fecha_hoy)
+      },
+      order:{
+        fecha_final: 'ASC'
+      }
+    })
+  }
 
   
    

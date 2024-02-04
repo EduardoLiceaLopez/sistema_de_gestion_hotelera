@@ -20,9 +20,12 @@ export class UsuariosAccesoService {
   ){};
 
   async create(createUsuariosAccesoInput: CreateUsuariosAccesoInput) {
+    
     await this.usuariosService.findOne(createUsuariosAccesoInput.usuario_id);
     const usuarioAcceso = this.usuariosAccesoReporitorio.create(createUsuariosAccesoInput);
     return this.usuariosAccesoReporitorio.save(usuarioAcceso);
+
+
   }
 
   findAll() {
@@ -52,10 +55,8 @@ export class UsuariosAccesoService {
   async findOneByNombreUsuario(nombre_usuario: string) {
     const usuarioAcceso = await this.usuariosAccesoReporitorio.findOneBy(
       {nombre_usuario:nombre_usuario});
-    if(!usuarioAcceso){
-      throw new NotFoundException('Ningun usuario de acceso encontrado con ese nombre de usuario');
-    }
     return usuarioAcceso;
+    
   }
 
 /**
